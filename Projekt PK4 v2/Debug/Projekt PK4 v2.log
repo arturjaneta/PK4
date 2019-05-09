@@ -1,0 +1,81 @@
+﻿  Assets.cpp
+c:\users\artur\source\repos\projekt pk4 v2\projekt pk4 v2\spriteinfo.h(15): warning C4244: "argument": konwersja z "T" do "T", możliwa utrata danych
+          with
+          [
+              T=unsigned int
+          ]
+          and
+          [
+              T=float
+          ]
+  Player.cpp
+c:\users\artur\source\repos\projekt pk4 v2\projekt pk4 v2\spriteinfo.h(15): warning C4244: "argument": konwersja z "T" do "T", możliwa utrata danych
+          with
+          [
+              T=unsigned int
+          ]
+          and
+          [
+              T=float
+          ]
+  projekt pk4.cpp
+c:\users\artur\source\repos\projekt pk4 v2\projekt pk4 v2\spriteinfo.h(15): warning C4244: "argument": konwersja z "T" do "T", możliwa utrata danych
+          with
+          [
+              T=unsigned int
+          ]
+          and
+          [
+              T=float
+          ]
+  SpriteObject.cpp
+c:\users\artur\source\repos\projekt pk4 v2\projekt pk4 v2\spriteinfo.h(15): warning C4244: "argument": konwersja z "T" do "T", możliwa utrata danych
+          with
+          [
+              T=unsigned int
+          ]
+          and
+          [
+              T=float
+          ]
+c:\users\artur\source\repos\projekt pk4 v2\projekt pk4 v2\spriteobject.cpp(34): warning C4244: "inicjowanie": konwersja z "T" do "int", możliwa utrata danych
+          with
+          [
+              T=float
+          ]
+c:\users\artur\source\repos\projekt pk4 v2\projekt pk4 v2\spriteobject.cpp(35): warning C4244: "inicjowanie": konwersja z "T" do "int", możliwa utrata danych
+          with
+          [
+              T=float
+          ]
+c:\users\artur\source\repos\projekt pk4 v2\projekt pk4 v2\spriteobject.cpp(37): warning C4244: "argument": konwersja z "T" do "T", możliwa utrata danych
+          with
+          [
+              T=float
+          ]
+          and
+          [
+              T=int
+          ]
+  World.cpp
+c:\users\artur\source\repos\projekt pk4 v2\projekt pk4 v2\spriteinfo.h(15): warning C4244: "argument": konwersja z "T" do "T", możliwa utrata danych
+          with
+          [
+              T=unsigned int
+          ]
+          and
+          [
+              T=float
+          ]
+  WorldObject.cpp
+c:\users\artur\source\repos\projekt pk4 v2\projekt pk4 v2\spriteinfo.h(15): warning C4244: "argument": konwersja z "T" do "T", możliwa utrata danych
+          with
+          [
+              T=unsigned int
+          ]
+          and
+          [
+              T=float
+          ]
+  Generowanie kodu...
+  Projekt PK4 v2.vcxproj -> c:\users\artur\source\repos\Projekt PK4 v2\Debug\Projekt PK4 v2.exe
