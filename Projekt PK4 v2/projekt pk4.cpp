@@ -9,6 +9,7 @@
 #include "World.h"
 
 
+
 int main()
 {
 	sf::RenderWindow window(sf::VideoMode(1600, 900), "Platformowka 2D");
@@ -16,19 +17,29 @@ int main()
 
 	World world("Content/Worlds/world.txt");
 
+	sf::Clock clk;
+	sf::Time acc = sf::Time::Zero;
+	sf::Time step=sf::seconds(1.f/60.f);
+	int ticks = 0;
+
 	while (window.isOpen())
 	{
-		sf::Event event;
-		while (window.pollEvent(event))
-		{
-			if (event.type == sf::Event::Closed)
-				window.close();
+		sf::Time dt = clk.restart();
+		acc += dt;
+		while (acc > step) {
+			sf::Event event;
+			while (window.pollEvent(event))
+			{
+				if (event.type == sf::Event::Closed)
+					window.close();
 
-			world.handleEvents(event);
+				world.handleEvents(event);
+			}
+
+			world.update();
+			acc -= step;
+			ticks++;
 		}
-
-		world.update();
-
 		window.clear();
 		world.draw(window);
 		window.display();

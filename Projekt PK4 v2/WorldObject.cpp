@@ -19,5 +19,5 @@ void WorldObject::update()
 void WorldObject::draw(sf::RenderTarget& target)
 {
 	SpriteObject::draw(target);
-	RenderPosition = PhysicsPosition;					//taka sama pozycja fizyczna i widoczna
+	RenderPosition = PhysicsPosition;
 }

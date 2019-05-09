@@ -3,7 +3,7 @@
 #include <fstream>
 #include "Assets.h"
 #define xGravity 0.f
-#define yGravity 0.1f
+#define yGravity 4.f
 
 World::World(std::string path)
 {
