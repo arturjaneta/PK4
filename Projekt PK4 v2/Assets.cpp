@@ -8,4 +8,5 @@ void Assets::loadAssets()
 	sprites["ammocrate"] = SpriteInfo("Content/Textures/ammocrate.png");
 	sprites["player"] = SpriteInfo("Content/Textures/player.png", 36, 6);
 	sprites["player"].mHitBox = sf::FloatRect(20.f, 10.f, 24.f, 44.f);
+	sprites["enemy"] = SpriteInfo("Content/Textures/enemy.png");
 }

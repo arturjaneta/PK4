@@ -6,6 +6,7 @@ Player::Player(SpriteInfo& info, sf::Vector2f pos) :
 	WorldObject(info, pos)
 {
 	Static = false;
+	onGround = false;
 }
 
 void Player::update()
@@ -39,6 +40,13 @@ void Player::update()
 	}
 
 }
+
+void Player::death(sf::Vector2f pos)
+{
+	setPhysicsPosition(pos);
+	setVelocity(sf::Vector2f(0,0));
+}
+
 
 void Player::draw(sf::RenderTarget& target)
 {

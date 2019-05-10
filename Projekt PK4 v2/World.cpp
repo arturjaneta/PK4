@@ -1,16 +1,18 @@
 
 #include "World.h"
 #include <fstream>
+#include <sstream>
+#include <iostream>
 #include "Assets.h"
 #define xGravity 0.f
 #define yGravity 4.f
 
 World::World(std::string path)
 {
-	mPlayer = std::make_shared<Player>(Assets::sprites["player"], sf::Vector2f());
+	loadWorld(path);
+	mPlayer = std::make_shared<Player>(Assets::sprites["player"], RespawnPoint);
 	mCollideables.push_back(mPlayer);
 	Gravity = sf::Vector2f(xGravity, yGravity);
-	loadWorld(path);
 }
 
 bool World::checkCollision(std::weak_ptr<ICollideable> a, std::weak_ptr<ICollideable> b)
@@ -60,7 +62,11 @@ auto x_collision(float overlapX,bool fromLeft, std::weak_ptr<ICollideable> a)
 
 void World::resolveCollision(std::weak_ptr<ICollideable> a, std::weak_ptr<ICollideable> b)
 {
-
+	auto tmp = b.lock();
+	if (a.lock()==mPlayer&&typeid(*tmp).name() == typeid(Enemy).name()) {					//RTTI
+		mPlayer->death(RespawnPoint);
+		return;
+	}
 
 	auto aLeft = a.lock()->getPhysicsPosition().x + a.lock()->getHitBox().left;
 	auto aTop = a.lock()->getPhysicsPosition().y + a.lock()->getHitBox().top;
@@ -90,7 +96,7 @@ void World::resolveCollision(std::weak_ptr<ICollideable> a, std::weak_ptr<IColli
 		{
 			y_collision(minOverlapY,fromTop,a);
 		}
-		else // x overlap
+		else if (std::abs(minOverlapX) < std::abs(minOverlapY)) // x overlap
 		{
 			x_collision(minOverlapX,fromLeft,a);
 		}
@@ -106,6 +112,12 @@ void World::update()
 	mPlayer->setVelocity(mPlayer->getVelocity()+Gravity*0.0166f);
 
 	for (auto& obj : mWorldObjects) {
+		obj->update();
+		if (!obj->isStatic()) {
+			obj->setVelocity(obj->getVelocity() + Gravity * 0.0166f);
+		}
+	}
+	for (auto& obj : mEnemies) {
 		obj->update();
 		if (!obj->isStatic()) {
 			obj->setVelocity(obj->getVelocity() + Gravity * 0.0166f);
@@ -142,6 +154,8 @@ void World::draw(sf::RenderTarget& target)
 
 	for (auto& obj : mWorldObjects)
 		obj->draw(target);
+	for (auto& obj : mEnemies)
+		obj->draw(target);
 }
 
 void World::handleEvents(sf::Event& event)
@@ -149,22 +163,41 @@ void World::handleEvents(sf::Event& event)
 	mPlayer->handleEvents(event);
 }
 
+
+
 void World::loadWorld(std::string path)
 {
 	std::ifstream file(path);
 
 	if (file.is_open())
 	{
-		while (!file.eof())
+		std::string id = "";
+		float x = 0;
+		float y = 0;
+		//respawn
+		file >>  x >> y;
+		RespawnPoint = sf::Vector2f(x, y);
+		/*while (!file.eof())
 		{
-			std::string id = "";
-			float x = 0;
-			float y = 0;
+			
+			file >> id >> x >> y;
+
+			auto newObj = std::make_shared<WorldObject>(Assets::sprites[id], sf::Vector2f(x, y));
+			mWorldObjects.push_back(newObj);
+			mCollideables.push_back(newObj);
+		}*/
+
+		for (int i = 0; i < 2; i++) {
 			file >> id >> x >> y;
 
 			auto newObj = std::make_shared<WorldObject>(Assets::sprites[id], sf::Vector2f(x, y));
 			mWorldObjects.push_back(newObj);
 			mCollideables.push_back(newObj);
 		}
+		file >> id >> x >> y;
+
+		auto newObj = std::make_shared<Enemy>(Assets::sprites[id], sf::Vector2f(x, y));
+		mEnemies.push_back(newObj);
+		mCollideables.push_back(newObj);
 	}
 }
