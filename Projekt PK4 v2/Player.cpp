@@ -2,6 +2,7 @@
 #include "Player.h"
 #define movSpeed 2.f
 
+
 Player::Player(SpriteInfo& info, sf::Vector2f pos) :
 	WorldObject(info, pos)
 {
@@ -15,7 +16,6 @@ void Player::update()
 
 	OldPhysicsPosition = PhysicsPosition;		//zapisanie poprzedniej pozycji
 	PhysicsPosition += Velocity;				//ustawienie nowej pozycji
-
 
 	//animacje
 	if (onGround) {
@@ -43,6 +43,7 @@ void Player::update()
 
 void Player::death(sf::Vector2f pos)
 {
+
 	setPhysicsPosition(pos);
 	setVelocity(sf::Vector2f(0,0));
 }

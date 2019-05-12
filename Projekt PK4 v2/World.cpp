@@ -6,6 +6,8 @@
 #include "Assets.h"
 #define xGravity 0.f
 #define yGravity 4.f
+#define resolution_x 1600
+#define resolution_y 900
 
 World::World(std::string path)
 {
@@ -108,6 +110,15 @@ void World::resolveCollision(std::weak_ptr<ICollideable> a, std::weak_ptr<IColli
 
 void World::update()
 {
+
+	//sprawdzenie czy na mapie
+	sf::FloatRect tmp = mPlayer->getHitBox();
+	tmp.left += mPlayer->getPhysicsPosition().x;
+	tmp.top += mPlayer->getPhysicsPosition().y;
+
+	if (!tmp.intersects(sf::FloatRect(0.f,0.f,resolution_x,resolution_y)))
+		mPlayer->death(RespawnPoint);
+	//grawitacja
 	mPlayer->update();
 	mPlayer->setVelocity(mPlayer->getVelocity()+Gravity*0.0166f);
 
@@ -156,6 +167,7 @@ void World::draw(sf::RenderTarget& target)
 		obj->draw(target);
 	for (auto& obj : mEnemies)
 		obj->draw(target);
+
 }
 
 void World::handleEvents(sf::Event& event)
@@ -177,7 +189,7 @@ void World::loadWorld(std::string path)
 		//respawn
 		file >>  x >> y;
 		RespawnPoint = sf::Vector2f(x, y);
-		/*while (!file.eof())
+		while (!file.eof())
 		{
 			
 			file >> id >> x >> y;
@@ -185,19 +197,14 @@ void World::loadWorld(std::string path)
 			auto newObj = std::make_shared<WorldObject>(Assets::sprites[id], sf::Vector2f(x, y));
 			mWorldObjects.push_back(newObj);
 			mCollideables.push_back(newObj);
-		}*/
+		}
 
-		for (int i = 0; i < 2; i++) {
+		/*for (int i = 0; i < 2; i++) {
 			file >> id >> x >> y;
 
 			auto newObj = std::make_shared<WorldObject>(Assets::sprites[id], sf::Vector2f(x, y));
 			mWorldObjects.push_back(newObj);
 			mCollideables.push_back(newObj);
-		}
-		file >> id >> x >> y;
-
-		auto newObj = std::make_shared<Enemy>(Assets::sprites[id], sf::Vector2f(x, y));
-		mEnemies.push_back(newObj);
-		mCollideables.push_back(newObj);
+		}*/
 	}
 }

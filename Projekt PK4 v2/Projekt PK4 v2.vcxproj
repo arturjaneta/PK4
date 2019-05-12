@@ -119,19 +119,23 @@
     <ClInclude Include="Enemy.h" />
     <ClInclude Include="IColliderable.h" />
     <ClInclude Include="IRenderable.h" />
+    <ClInclude Include="Pause.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="SpriteInfo.h" />
     <ClInclude Include="SpriteObject.h" />
     <ClInclude Include="World.h" />
+    <ClInclude Include="WorldManager.h" />
     <ClInclude Include="WorldObject.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Assets.cpp" />
     <ClCompile Include="Enemy.cpp" />
+    <ClCompile Include="Pause.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="projekt pk4.cpp" />
     <ClCompile Include="SpriteObject.cpp" />
     <ClCompile Include="World.cpp" />
+    <ClCompile Include="WorldManager.cpp" />
     <ClCompile Include="WorldObject.cpp" />
   </ItemGroup>
   <ItemGroup>

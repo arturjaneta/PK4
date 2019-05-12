@@ -7,8 +7,8 @@
 #include "Assets.h"
 #include "Player.h"
 #include "World.h"
-
-
+#include "Pause.h"
+#include <Windows.h>
 
 int main()
 {
@@ -16,12 +16,12 @@ int main()
 	Assets::loadAssets();
 
 	World world("Content/Worlds/world.txt");
-
+	Pause pScreen(10);
 	sf::Clock clk;
 	sf::Time acc = sf::Time::Zero;
 	sf::Time step=sf::seconds(1.f/60.f);
-	int ticks = 0;
-
+	int pause = 0;
+	
 	while (window.isOpen())
 	{
 		sf::Time dt = clk.restart();
@@ -32,16 +32,31 @@ int main()
 			{
 				if (event.type == sf::Event::Closed)
 					window.close();
-
+				sf::Time PauseTime = sf::Time::Zero;
+				if (event.type == sf::Event::KeyPressed&&event.key.code == sf::Keyboard::Escape) {
+					std::cout << "PAUSE\n";
+					if (pause == 0) {
+						pause = 1;
+					}
+					else {
+						pause = 0;
+					}
+				}
+				if(pause!=1)
 				world.handleEvents(event);
 			}
-
+			if (pause != 1)
 			world.update();
 			acc -= step;
-			ticks++;
 		}
 		window.clear();
 		world.draw(window);
+		if (pause == 1) {
+			sf::Event event; 
+			pScreen.handleEvents(event);
+			pScreen.update();
+			pScreen.draw(window);
+		}
 		window.display();
 	}
 
