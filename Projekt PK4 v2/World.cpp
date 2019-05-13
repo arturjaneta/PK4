@@ -6,8 +6,8 @@
 #include "Assets.h"
 #define xGravity 0.f
 #define yGravity 4.f
-#define resolution_x 1600
-#define resolution_y 900
+#define resolution_x 1920
+#define resolution_y 1080
 
 World::World(std::string path)
 {

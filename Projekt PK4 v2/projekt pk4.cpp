@@ -12,7 +12,7 @@
 
 int main()
 {
-	sf::RenderWindow window(sf::VideoMode(1600, 900), "Platformowka 2D");
+	sf::RenderWindow window(sf::VideoMode(1920, 1080), "Platformowka 2D", sf::Style::Fullscreen);
 	Assets::loadAssets();
 
 	World world("Content/Worlds/world.txt");
@@ -44,6 +44,10 @@ int main()
 				}
 				if(pause!=1)
 				world.handleEvents(event);
+				else
+				pause = pScreen.handleEvents(event);
+				if (pause == 2)
+					window.close();
 			}
 			if (pause != 1)
 			world.update();
@@ -52,8 +56,6 @@ int main()
 		window.clear();
 		world.draw(window);
 		if (pause == 1) {
-			sf::Event event; 
-			pScreen.handleEvents(event);
 			pScreen.update();
 			pScreen.draw(window);
 		}
