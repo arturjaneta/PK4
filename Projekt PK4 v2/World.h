@@ -12,7 +12,7 @@
 class World
 {
 public:
-	World(std::string path);
+	World(std::string path= "Content/Worlds/world.txt");
 	~World() {}
 
 	void update();
@@ -21,9 +21,9 @@ public:
 
 	bool checkCollision(std::weak_ptr<ICollideable> a, std::weak_ptr<ICollideable> b);
 	void resolveCollision(std::weak_ptr<ICollideable> a, std::weak_ptr<ICollideable> b);
-
-private:
 	void loadWorld(std::string path);
+private:
+	
 	
 	std::shared_ptr<Player> mPlayer;
 	std::vector<std::shared_ptr<WorldObject>> mWorldObjects;

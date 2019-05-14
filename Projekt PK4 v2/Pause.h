@@ -3,6 +3,7 @@
 #include "SpriteObject.h"
 #include "Assets.h"
 #include <SFML/Window.hpp>
+#include "WorldManager.h"
 
 class Pause
 {
@@ -15,6 +16,6 @@ public:
 	Pause(int LvlCount);
 	void update();
 	void draw(sf::RenderTarget& target);
-	int handleEvents(sf::Event& event);
+	int handleEvents(sf::Event& event,WorldManager& world);
 };
 

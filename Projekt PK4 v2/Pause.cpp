@@ -69,7 +69,7 @@ void Pause::draw(sf::RenderTarget & target)
 	
 }
 
-int Pause::handleEvents(sf::Event & event)
+int Pause::handleEvents(sf::Event & event,WorldManager& world)
 {
 	int tmp = 1;
 	if (event.type == sf::Event::KeyPressed)
@@ -89,7 +89,8 @@ int Pause::handleEvents(sf::Event & event)
 					break;
 			case 1: tmp=2;
 				break;
-			default://load wold pointer-2
+			default:
+				world.SetWorld(pointer - 2);
 				tmp = 0;
 				break;
 			}

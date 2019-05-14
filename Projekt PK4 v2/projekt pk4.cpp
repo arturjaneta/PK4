@@ -7,33 +7,23 @@
 #include "Assets.h"
 #include "Player.h"
 #include "World.h"
+#include "WorldManager.h"
 #include "Pause.h"
 #include <Windows.h>
+#define WorldsCount 2
 
 int main()
 {
 	sf::RenderWindow window(sf::VideoMode(1920, 1080), "Platformowka 2D", sf::Style::Fullscreen);
 	Assets::loadAssets();
 
-	World world("Content/Worlds/world.txt");
-	Pause pScreen(10);
+	WorldManager world(WorldsCount);
+	Pause pScreen(world.GetWorldsCount());
 	sf::Clock clk;
 	sf::Time acc = sf::Time::Zero;
 	sf::Time step=sf::seconds(1.f/60.f);
 	int pause = 0;
 	
-	/*sf::Font font;
-	if (!font.loadFromFile("Content/Fonts/Calibri.ttf"))
-	{
-		std::cout << "Font error\n";
-	}*/
-	/*sf::Text pointsText;
-	pointsText.setString("something");
-	pointsText.setFont(font);
-	pointsText.setCharacterSize(100);
-	pointsText.setStyle(sf::Text::Bold);
-	pointsText.setFillColor(sf::Color::Red);
-	pointsText.setPosition(sf::Vector2f(0,0));*/
 
 	while (window.isOpen())
 	{
@@ -56,23 +46,22 @@ int main()
 					}
 				}
 				if(pause!=1)
-				world.handleEvents(event);
+				world.GetActualWorld().handleEvents(event);
 				else
-				pause = pScreen.handleEvents(event);
+				pause = pScreen.handleEvents(event,world);
 				if (pause == 2)
 					window.close();
 			}
 			if (pause != 1)
-			world.update();
+				world.GetActualWorld().update();
 			acc -= step;
 		}
 		window.clear();
-		world.draw(window);
+		world.GetActualWorld().draw(window);
 		if (pause == 1) {
 			pScreen.update();
 			pScreen.draw(window);
 		}
-		//window.draw(pointsText);
 		window.display();
 		
 	}
@@ -80,13 +69,3 @@ int main()
 	return 0;
 }
 
-//void Board::SetPointsText()
-//{
-//	pointsText.setFont(font);
-//	pointsText.setCharacterSize(20);
-//	pointsText.setStyle(sf::Text::Bold);
-//	pointsText.setFillColor(sf::Color::Red);
-//	sf::FloatRect textRect = pointsText.getLocalBounds();
-//	pointsText.setOrigin(textRect.width, textRect.height);
-//	pointsText.setPosition(sf::Vector2f(screen.screenWidth * .1f, screen.screenHeight * .95f));
-//}
