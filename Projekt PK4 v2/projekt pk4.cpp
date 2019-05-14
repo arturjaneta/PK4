@@ -22,6 +22,19 @@ int main()
 	sf::Time step=sf::seconds(1.f/60.f);
 	int pause = 0;
 	
+	/*sf::Font font;
+	if (!font.loadFromFile("Content/Fonts/Calibri.ttf"))
+	{
+		std::cout << "Font error\n";
+	}*/
+	/*sf::Text pointsText;
+	pointsText.setString("something");
+	pointsText.setFont(font);
+	pointsText.setCharacterSize(100);
+	pointsText.setStyle(sf::Text::Bold);
+	pointsText.setFillColor(sf::Color::Red);
+	pointsText.setPosition(sf::Vector2f(0,0));*/
+
 	while (window.isOpen())
 	{
 		sf::Time dt = clk.restart();
@@ -59,8 +72,21 @@ int main()
 			pScreen.update();
 			pScreen.draw(window);
 		}
+		//window.draw(pointsText);
 		window.display();
+		
 	}
 
 	return 0;
 }
+
+//void Board::SetPointsText()
+//{
+//	pointsText.setFont(font);
+//	pointsText.setCharacterSize(20);
+//	pointsText.setStyle(sf::Text::Bold);
+//	pointsText.setFillColor(sf::Color::Red);
+//	sf::FloatRect textRect = pointsText.getLocalBounds();
+//	pointsText.setOrigin(textRect.width, textRect.height);
+//	pointsText.setPosition(sf::Vector2f(screen.screenWidth * .1f, screen.screenHeight * .95f));
+//}

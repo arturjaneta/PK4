@@ -2,12 +2,13 @@
 #include <SFML/Graphics.hpp>
 #include "SpriteObject.h"
 #include "Assets.h"
+#include <SFML/Window.hpp>
 
 class Pause
 {
 	int pointer;
+	int WorldsCount;
 	std::vector<std::shared_ptr<SpriteObject>> mButtons;
-	//std::vector<std::shared_ptr<sf::Text>> mLvlText;
 	std::shared_ptr<SpriteObject > mPointer;
 	std::shared_ptr<SpriteObject > mBackground;
 public:

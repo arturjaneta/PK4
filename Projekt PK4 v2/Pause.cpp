@@ -4,12 +4,7 @@
 
 Pause::Pause(int LvlCount):pointer(0)
 {
-	/*int lvlnb=1;
-	sf::Font font;
-	if (!font.loadFromFile("Content/Fonts/Calibri.ttf"))
-	{
-		std::cout << "Font error\n";
-	}*/
+	WorldsCount = LvlCount;
 	mPointer = std::make_shared<SpriteObject>(Assets::sprites["pointer"], sf::Vector2f(560, 0));
 	mBackground=std::make_shared<SpriteObject>(Assets::sprites["pause"], sf::Vector2f(0, 0));
 	mButtons.push_back(std::make_shared<SpriteObject>(Assets::sprites["buttonbig2"], sf::Vector2f(660, 0)));
@@ -17,18 +12,13 @@ Pause::Pause(int LvlCount):pointer(0)
 	for (int i = 0; i < 3; i++) {
 		for (int j = 0; j < 9; j++) {
 			if (LvlCount > 0) {
-				/*auto text=std::make_shared<sf::Text>(std::to_string(lvlnb),font,40);
-				text->setPosition(180 + i * 580, 320 + j * 80);
-				text->setFillColor(sf::Color::White);
-				mLvlText.push_back(text);*/
 				auto newObj = std::make_shared<SpriteObject>(Assets::sprites["buttonsmall"], sf::Vector2f(180 + i * 580, 320 + j * 80));
 				mButtons.push_back(newObj);
-				//lvlnb++;
 			}
 			LvlCount--;
 		}
 	}
-
+	
 }
 
 void Pause::update()
@@ -43,11 +33,38 @@ void Pause::update()
 
 void Pause::draw(sf::RenderTarget & target)
 {
+
 	mBackground->draw(target);
 	for (auto& obj : mButtons)
 		obj->SpriteObject::draw(target);
-	/*for (auto& obj : mLvlText)
-		target.draw(*obj);*/
+
+
+	sf::Text text;
+	sf::Font font;
+	if (!font.loadFromFile("Content/Fonts/Calibri.ttf"))
+	{
+		std::cout << "Font error\n";
+	}
+	text.setFont(font);
+	text.setCharacterSize(40);
+	text.setStyle(sf::Text::Bold);
+	text.setFillColor(sf::Color::White);
+	text.setOutlineColor(sf::Color::Black);
+	text.setOutlineThickness(2);
+	int tmp = 0;
+	for (int i = 0; i < 3; i++) {
+		for (int j = 0; j <9 ; j++) {
+			if (tmp < WorldsCount) {
+				text.setString(std::to_string(tmp + 1));
+				text.setPosition(sf::Vector2f(435 + i * 580, 330 + j * 80));
+				target.draw(text);
+			}
+			tmp++;
+		}
+	}
+
+
+
 	mPointer->draw(target);
 	
 }
@@ -64,7 +81,7 @@ int Pause::handleEvents(sf::Event & event)
 			pointer++;
 		}
 
-		if (event.key.code == sf::Keyboard::E) {
+		if (event.key.code == sf::Keyboard::Enter) {
 			//switch do odpowiedniej akcji
 			switch (pointer) 
 			{
