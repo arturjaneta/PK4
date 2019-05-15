@@ -24,6 +24,7 @@ public:
 	void setDimensions(sf::Vector2f dim) { Dimensions = dim; }
 	void setPhysicsPosition(sf::Vector2f pos) { PhysicsPosition = pos; }
 	void setVelocity(sf::Vector2f vel) { Velocity = vel; }
+	void setStatic(bool stat) { Static=stat; }
 
 	// Accessors
 	sf::FloatRect getHitBox() { return HitBox; }

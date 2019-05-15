@@ -65,7 +65,7 @@ auto x_collision(float overlapX,bool fromLeft, std::weak_ptr<ICollideable> a)
 void World::resolveCollision(std::weak_ptr<ICollideable> a, std::weak_ptr<ICollideable> b)
 {
 	auto tmp = b.lock();
-	if (a.lock()==mPlayer&&typeid(*tmp).name() == typeid(Enemy).name()) {					//RTTI
+	if (a.lock()==mPlayer&&typeid(*tmp).name() == typeid(Trap).name()) {					//RTTI
 		mPlayer->death(RespawnPoint);
 		return;
 	}
@@ -91,7 +91,19 @@ void World::resolveCollision(std::weak_ptr<ICollideable> a, std::weak_ptr<IColli
 	float minOverlapX{ fromLeft ? overlapLeft : overlapRight };
 	float minOverlapY{ fromTop ? overlapTop : overlapBottom };
 
-	
+	if (a.lock() == mPlayer && typeid(*tmp).name() == typeid(Enemy).name()) {					//RTTI
+		if (fromTop) {
+			b.lock()->setPhysicsPosition(sf::Vector2f(500,1500));
+			b.lock()->setVelocity(sf::Vector2f(0, 0));
+			b.lock()->setStatic(true);
+		}
+		else {
+			mPlayer->death(RespawnPoint);
+			return;
+		}
+	}
+
+
 	if (a.lock()->ContactBegin(b, fromLeft, fromTop) && b.lock()->ContactBegin(a, fromLeft, fromTop))
 	{
 		if (std::abs(minOverlapX) > std::abs(minOverlapY)) // y overlap
@@ -128,6 +140,13 @@ void World::update()
 			obj->setVelocity(obj->getVelocity() + Gravity * 0.0166f);
 		}
 	}
+	for (auto& obj : mTraps) {
+		obj->update();
+		if (!obj->isStatic()) {
+			obj->setVelocity(obj->getVelocity() + Gravity * 0.0166f);
+		}
+	}
+
 	for (auto& obj : mEnemies) {
 		obj->update();
 		if (!obj->isStatic()) {
@@ -161,13 +180,15 @@ void World::update()
 
 void World::draw(sf::RenderTarget& target)
 {
-	mPlayer->draw(target);
+	
 
 	for (auto& obj : mWorldObjects)
 		obj->draw(target);
+	for (auto& obj : mTraps)
+		obj->draw(target);
 	for (auto& obj : mEnemies)
 		obj->draw(target);
-
+	mPlayer->draw(target);
 }
 
 void World::handleEvents(sf::Event& event)
@@ -186,25 +207,33 @@ void World::loadWorld(std::string path)
 		std::string id = "";
 		float x = 0;
 		float y = 0;
+		char z;
 		//respawn
 		file >>  x >> y;
 		RespawnPoint = sf::Vector2f(x, y);
 		while (!file.eof())
 		{
-			
-			file >> id >> x >> y;
-
-			auto newObj = std::make_shared<WorldObject>(Assets::sprites[id], sf::Vector2f(x, y));
-			mWorldObjects.push_back(newObj);
-			mCollideables.push_back(newObj);
+			file >> id >> x >> y>>z;
+			if (z == 'n') {
+				auto newObj = std::make_shared<Trap>(Assets::sprites[id], sf::Vector2f(x, y));
+				mTraps.push_back(newObj);
+			}else if(z == 't'){
+				auto newObj = std::make_shared<Trap>(Assets::sprites[id], sf::Vector2f(x, y));
+				mTraps.push_back(newObj);
+				mCollideables.push_back(newObj);
+			}
+			else if(z=='e'){
+				int tmp;
+				file >> tmp;
+				auto newObj = std::make_shared<Enemy>(Assets::sprites[id], sf::Vector2f(x, y),tmp);
+				mEnemies.push_back(newObj);
+				mCollideables.push_back(newObj);
+			}
+			else{
+				auto newObj = std::make_shared<WorldObject>(Assets::sprites[id], sf::Vector2f(x, y));
+				mWorldObjects.push_back(newObj);
+				mCollideables.push_back(newObj);
+			}
 		}
-
-		/*for (int i = 0; i < 2; i++) {
-			file >> id >> x >> y;
-
-			auto newObj = std::make_shared<WorldObject>(Assets::sprites[id], sf::Vector2f(x, y));
-			mWorldObjects.push_back(newObj);
-			mCollideables.push_back(newObj);
-		}*/
 	}
 }

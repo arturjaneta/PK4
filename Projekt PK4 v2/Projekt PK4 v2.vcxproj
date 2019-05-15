@@ -117,6 +117,7 @@
   <ItemGroup>
     <ClInclude Include="Assets.h" />
     <ClInclude Include="Enemy.h" />
+    <ClInclude Include="Trap.h" />
     <ClInclude Include="IColliderable.h" />
     <ClInclude Include="IRenderable.h" />
     <ClInclude Include="Pause.h" />
@@ -130,6 +131,7 @@
   <ItemGroup>
     <ClCompile Include="Assets.cpp" />
     <ClCompile Include="Enemy.cpp" />
+    <ClCompile Include="Trap.cpp" />
     <ClCompile Include="Pause.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="projekt pk4.cpp" />

@@ -7,6 +7,7 @@
 #include "Player.h"
 #include "WorldObject.h"
 #include "IColliderable.h"
+#include "Trap.h"
 #include "Enemy.h"
 
 class World
@@ -28,6 +29,7 @@ private:
 	std::shared_ptr<Player> mPlayer;
 	std::vector<std::shared_ptr<WorldObject>> mWorldObjects;
 	std::vector<std::weak_ptr<ICollideable>> mCollideables;
+	std::vector<std::shared_ptr<Trap>> mTraps;
 	std::vector<std::shared_ptr<Enemy>> mEnemies;
 
 	sf::Vector2f Gravity;
