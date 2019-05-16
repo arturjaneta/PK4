@@ -5,7 +5,7 @@ Enemy::Enemy(SpriteInfo & info, sf::Vector2f pos,int shift):WorldObject(info, po
 Shift(shift),FirstPosition(pos)
 {
 	Static = false;
-	Velocity = sf::Vector2f(1.f, 0.f);
+	Velocity = sf::Vector2f(1.5f, 0.f);
 }
 
 void Enemy::update()

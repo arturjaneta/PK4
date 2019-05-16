@@ -65,6 +65,7 @@ auto x_collision(float overlapX,bool fromLeft, std::weak_ptr<ICollideable> a)
 void World::resolveCollision(std::weak_ptr<ICollideable> a, std::weak_ptr<ICollideable> b)
 {
 	auto tmp = b.lock();
+	auto tmp1 = a.lock();
 	if (a.lock()==mPlayer&&typeid(*tmp).name() == typeid(Trap).name()) {					//RTTI
 		mPlayer->death(RespawnPoint);
 		return;
@@ -92,12 +93,31 @@ void World::resolveCollision(std::weak_ptr<ICollideable> a, std::weak_ptr<IColli
 	float minOverlapY{ fromTop ? overlapTop : overlapBottom };
 
 	if (a.lock() == mPlayer && typeid(*tmp).name() == typeid(Enemy).name()) {					//RTTI
+		std::cout << "Kill\n";
 		if (fromTop) {
+			std::cout << "Kill enemy\n";
 			b.lock()->setPhysicsPosition(sf::Vector2f(500,1500));
 			b.lock()->setVelocity(sf::Vector2f(0, 0));
 			b.lock()->setStatic(true);
+			return;
 		}
 		else {
+			std::cout << "Kill player\n";
+			mPlayer->death(RespawnPoint);
+			return;
+		}
+	}
+	else if ((b.lock() == mPlayer && typeid(*tmp1).name() == typeid(Enemy).name()))
+	{
+		if (!fromTop) {
+			std::cout << "Kill enemy\n";
+			a.lock()->setPhysicsPosition(sf::Vector2f(500, 1500));
+			a.lock()->setVelocity(sf::Vector2f(0, 0));
+			a.lock()->setStatic(true);
+			return;
+		}
+		else {
+			std::cout << "Kill player\n";
 			mPlayer->death(RespawnPoint);
 			return;
 		}
