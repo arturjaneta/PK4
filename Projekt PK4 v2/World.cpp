@@ -245,8 +245,8 @@ void World::loadWorld(std::string path)
 		{
 			file >> id >> x >> y >> z;
 			if (z == 'n') {
-				auto newObj = std::make_shared<Trap>(Assets::sprites[id], sf::Vector2f(x, y));
-				mTraps.push_back(newObj);
+				auto newObj = std::make_shared<WorldObject>(Assets::sprites[id], sf::Vector2f(x, y));
+				mWorldObjects.push_back(newObj);
 			}
 			else if (z == 't') {
 				auto newObj = std::make_shared<Trap>(Assets::sprites[id], sf::Vector2f(x, y));

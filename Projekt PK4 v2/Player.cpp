@@ -20,23 +20,23 @@ void Player::update()
 	//animacje
 	if (onGround) {
 		if (Direction == left)
-			setFrameLoop(12, 17);
+			setFrameLoop(16, 23);
 		else if(Direction == right)
-			setFrameLoop(18, 23);
+			setFrameLoop(0, 7);
 		else if (Direction == stat_left)
-			setFrameLoop(0, 5);
+			setFrameLoop(27, 27);
 		else if (Direction == stat_right)
-			setFrameLoop(6, 11);
+			setFrameLoop(11, 11);
 	}
 	else {
 		if (Direction == left)
-			setFrameLoop(33, 33);
+			setFrameLoop(24, 26);
 		else if (Direction == right)
-			setFrameLoop(30, 30);
+			setFrameLoop(8, 10);
 		else if (Direction == stat_left)
-			setFrameLoop(35, 35);
+			setFrameLoop(26, 26);
 		else if (Direction == stat_right)
-			setFrameLoop(32, 32);
+			setFrameLoop(10, 10);
 	}
 
 }
