@@ -1,0 +1,3 @@
+0 0
+347 817
+platforma3x_poziom 0 900 c
