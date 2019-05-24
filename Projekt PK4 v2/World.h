@@ -9,6 +9,8 @@
 #include "IColliderable.h"
 #include "Trap.h"
 #include "Enemy.h"
+#include "Exit.h"
+
 
 class World
 {
@@ -25,8 +27,8 @@ public:
 	void loadWorld(std::string path);
 private:
 	
-	
 	std::shared_ptr<Player> mPlayer;
+	std::shared_ptr<Exit> mExit;
 	std::vector<std::shared_ptr<WorldObject>> mWorldObjects;
 	std::vector<std::weak_ptr<ICollideable>> mCollideables;
 	std::vector<std::shared_ptr<Trap>> mTraps;

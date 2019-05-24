@@ -25,6 +25,7 @@ public:
 	void setPhysicsPosition(sf::Vector2f pos) { PhysicsPosition = pos; }
 	void setVelocity(sf::Vector2f vel) { Velocity = vel; }
 	void setStatic(bool stat) { Static=stat; }
+	void setCollisionActive(bool act) { CollisionActive = act; }
 
 	// Accessors
 	sf::FloatRect getHitBox() { return HitBox; }

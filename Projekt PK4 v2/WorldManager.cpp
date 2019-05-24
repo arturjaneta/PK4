@@ -4,7 +4,6 @@
 
 WorldManager::WorldManager(int LvlCount):WorldsCount(LvlCount),ActualWorldNb(0)
 {
-	ActualWorld = World("Content/Worlds/world0.txt");
 	std::string path,path_1, path_2;
 	path_1 = "Content/Worlds/world";
 	path_2 = ".txt";
@@ -13,6 +12,7 @@ WorldManager::WorldManager(int LvlCount):WorldsCount(LvlCount),ActualWorldNb(0)
 		auto newObj = std::make_shared<World>(path);
 		mWorlds.push_back(newObj);
 	}
+	ActualWorld = *mWorlds[0];	//zaczynamy od 1 swiata
 }
 
 void WorldManager::SetWorld(int World_nb)

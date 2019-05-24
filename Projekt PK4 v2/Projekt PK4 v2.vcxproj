@@ -117,6 +117,7 @@
   <ItemGroup>
     <ClInclude Include="Assets.h" />
     <ClInclude Include="Enemy.h" />
+    <ClInclude Include="Exit.h" />
     <ClInclude Include="Trap.h" />
     <ClInclude Include="IColliderable.h" />
     <ClInclude Include="IRenderable.h" />
@@ -131,6 +132,7 @@
   <ItemGroup>
     <ClCompile Include="Assets.cpp" />
     <ClCompile Include="Enemy.cpp" />
+    <ClCompile Include="Exit.cpp" />
     <ClCompile Include="Trap.cpp" />
     <ClCompile Include="Pause.cpp" />
     <ClCompile Include="Player.cpp" />
