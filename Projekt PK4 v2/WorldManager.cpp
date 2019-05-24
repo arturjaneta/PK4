@@ -1,27 +1,47 @@
 #include "WorldManager.h"
 
 #include <string>
-
-WorldManager::WorldManager(int LvlCount):WorldsCount(LvlCount),ActualWorldNb(0)
-{
-	std::string path,path_1, path_2;
-	path_1 = "Content/Worlds/world";
-	path_2 = ".txt";
-	for (int i = 0; i < LvlCount; i++) {
-		path = path_1 + std::to_string(i) + path_2;
-		auto newObj = std::make_shared<World>(path);
-		mWorlds.push_back(newObj);
-	}
-	ActualWorld = *mWorlds[0];	//zaczynamy od 1 swiata
-}
+#include <fstream>
 
 void WorldManager::SetWorld(int World_nb)
 {
+	std::string path, path_1, path_2;
+	path_1 = "Content/Worlds/world";
+	path_2 = ".txt";
 	if (World_nb > WorldsCount - 1) {
-		//ekarn koncowy
+		ActualWorld = std::make_shared<World>("Content/Worlds/world0.txt");	//od poczatku
+		ActualWorldNb = 0;
+		return;
 	}
-	ActualWorld = *mWorlds[World_nb];
+	else if (World_nb < 0) {
+		return;
+	}
+	path = path_1 + std::to_string(World_nb) + path_2;
+	ActualWorld = std::make_shared<World>(path);
 	ActualWorldNb = World_nb;
+}
+
+WorldManager::WorldManager():ActualWorldNb(0)
+{
+	int i = 0;
+	std::fstream file;
+	do {
+		std::string path, path_1, path_2;
+		path_1 = "Content/Worlds/world";
+		path_2 = ".txt";
+		path = path_1 + std::to_string(i) + path_2;
+		file.open(path);
+		i++;
+	} while (file.good());
+	WorldsCount = i;
+	SetWorld(0);//zaczynamy od 1 swiata
+}
+
+
+
+void WorldManager::SetNextWorld()
+{
+	SetWorld(ActualWorldNb + 1);
 }
 
 

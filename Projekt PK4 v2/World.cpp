@@ -1,15 +1,16 @@
-
+#include "WorldManager.h"
 #include "World.h"
 #include <fstream>
 #include <sstream>
 #include <iostream>
 #include "Assets.h"
+
 #define xGravity 0.f
 #define yGravity 4.f
 #define resolution_x 1920
 #define resolution_y 1080
 
-World::World(std::string path)
+World::World(std::string path):ifExit(false)
 {
 	loadWorld(path);
 	mPlayer = std::make_shared<Player>(Assets::sprites["player"], RespawnPoint);
@@ -72,10 +73,7 @@ void World::resolveCollision(std::weak_ptr<ICollideable> a, std::weak_ptr<IColli
 	}
 	else if (a.lock() == mPlayer && typeid(*tmp).name() == typeid(Exit).name()) {
 		std::cout << "Exit\n";
-		/*if(world.GetActualWorldNb()+1<world.GetWorldsCount())
-		world.SetWorld(world.GetActualWorldNb() + 1);
-		else
-			world.SetWorld(0);*/
+		ifExit = true;
 	}
 
 	auto aLeft = a.lock()->getPhysicsPosition().x + a.lock()->getHitBox().left;

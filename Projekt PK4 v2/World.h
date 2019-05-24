@@ -15,7 +15,7 @@
 class World
 {
 public:
-	World(std::string path= "Content/Worlds/world.txt");
+	World(std::string path= "Content/Worlds/world0.txt");
 	~World() {}
 
 	void update();
@@ -25,6 +25,7 @@ public:
 	bool checkCollision(std::weak_ptr<ICollideable> a, std::weak_ptr<ICollideable> b);
 	void resolveCollision(std::weak_ptr<ICollideable> a, std::weak_ptr<ICollideable> b);
 	void loadWorld(std::string path);
+	bool GetIfExit() { return ifExit; }
 private:
 	
 	std::shared_ptr<Player> mPlayer;
@@ -36,6 +37,7 @@ private:
 
 	sf::Vector2f Gravity;
 	sf::Vector2f RespawnPoint;
+	bool ifExit;
 };
 
 #endif // WORLD_H

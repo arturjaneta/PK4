@@ -11,14 +11,11 @@
 #include "Pause.h"
 #include <Windows.h>
 
-#define WorldsCount 2
-
 int main()
 {
 	sf::RenderWindow window(sf::VideoMode(1920, 1080), "Platformowka 2D", sf::Style::Fullscreen);
 	Assets::loadAssets();
-
-	WorldManager world(WorldsCount);
+	WorldManager world;
 	Pause pScreen(world.GetWorldsCount());
 	sf::Clock clk;
 	sf::Time acc = sf::Time::Zero;
@@ -47,24 +44,26 @@ int main()
 					}
 				}
 				if(pause!=1)
-				world.GetActualWorld().handleEvents(event);
+				world.GetActualWorld()->handleEvents(event);
 				else
 				pause = pScreen.handleEvents(event,world);
 				if (pause == 2)
 					window.close();
 			}
 			if (pause != 1)
-				world.GetActualWorld().update();
+				world.GetActualWorld()->update();
 			acc -= step;
 		}
 		window.clear();
-		world.GetActualWorld().draw(window);
+		world.GetActualWorld()->draw(window);
 		if (pause == 1) {
 			pScreen.update();
 			pScreen.draw(window);
 		}
 		window.display();
-		
+		if (world.GetActualWorld()->GetIfExit()) {
+			world.SetNextWorld();
+		}
 	}
 
 	return 0;

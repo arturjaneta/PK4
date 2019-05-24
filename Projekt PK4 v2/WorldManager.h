@@ -5,13 +5,13 @@ class WorldManager
 {
 	int ActualWorldNb;
 	int WorldsCount;
-	World ActualWorld;
-	std::vector<std::shared_ptr<World>> mWorlds;
+	std::shared_ptr<World> ActualWorld;
 public:
-	WorldManager(int LvlCount);
+	WorldManager();
 	void SetWorld(int World_nb);
+	void SetNextWorld();
 	int GetWorldsCount() { return WorldsCount; }
 	int GetActualWorldNb() { return ActualWorldNb; }
-	World GetActualWorld() { return ActualWorld; }
+	std::shared_ptr<World> GetActualWorld() { return ActualWorld; }
 };
 
