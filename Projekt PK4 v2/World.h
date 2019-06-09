@@ -1,6 +1,4 @@
 #pragma once
-#ifndef WORLD_H
-#define WORLD_H
 
 #include <SFML/Graphics.hpp>
 #include <memory>
@@ -40,4 +38,3 @@ private:
 	bool ifExit;
 };
 
-#endif // WORLD_H

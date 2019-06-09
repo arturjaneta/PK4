@@ -4,7 +4,6 @@ Exit::Exit(SpriteInfo & info, sf::Vector2f pos) :
 	WorldObject(info, pos)
 {
 }
-
 void Exit::update()
 {
 	SpriteObject::update();
@@ -16,6 +15,5 @@ void Exit::update()
 void Exit::draw(sf::RenderTarget & target)
 {
 	SpriteObject::draw(target);
-
 	RenderPosition = PhysicsPosition;
 }

@@ -10,20 +10,17 @@ Shift(shift),FirstPosition(pos)
 
 void Enemy::update()
 {
-
 	SpriteObject::update();
-
 	OldPhysicsPosition = PhysicsPosition;		//zapisanie poprzedniej pozycji
 	PhysicsPosition += Velocity;				//ustawienie nowej pozycji
 	if (PhysicsPosition.x<FirstPosition.x - Shift || PhysicsPosition.x > FirstPosition.x + Shift) {
 		PhysicsPosition = OldPhysicsPosition;
 		Velocity.x = -Velocity.x;
-	}
+	}											//zmienic teksture
 }
 
 void Enemy::draw(sf::RenderTarget & target)
 {
 	SpriteObject::draw(target);
-
 	RenderPosition = PhysicsPosition;
 }

@@ -1,5 +1,4 @@
 #include "Pause.h"
-
 #include <iostream>
 
 Pause::Pause(int LvlCount):pointer(0)
@@ -18,9 +17,7 @@ Pause::Pause(int LvlCount):pointer(0)
 			LvlCount--;
 		}
 	}
-	
 }
-
 void Pause::update()
 {
 	mPointer->setPosition(mButtons[pointer]->getRenderPosition()-sf::Vector2f(100, -(mButtons[pointer]->getSpriteInfo().mHitBox.height-76)/2));
@@ -30,15 +27,11 @@ void Pause::update()
 	mBackground->update();
 	mPointer->update();
 }
-
 void Pause::draw(sf::RenderTarget & target)
 {
-
 	mBackground->draw(target);
 	for (auto& obj : mButtons)
 		obj->SpriteObject::draw(target);
-
-
 	sf::Text text;
 	sf::Font font;
 	if (!font.loadFromFile("Content/Fonts/Calibri.ttf"))
@@ -62,13 +55,8 @@ void Pause::draw(sf::RenderTarget & target)
 			tmp++;
 		}
 	}
-
-
-
 	mPointer->draw(target);
-	
 }
-
 int Pause::handleEvents(sf::Event & event,WorldManager& world)
 {
 	int tmp = 1;
@@ -76,14 +64,11 @@ int Pause::handleEvents(sf::Event & event,WorldManager& world)
 	{
 		if (event.key.code == sf::Keyboard::W) {
 			pointer--;
-		}
-		else if (event.key.code == sf::Keyboard::S) {
+		}else if (event.key.code == sf::Keyboard::S) {
 			pointer++;
 		}
-
 		if (event.key.code == sf::Keyboard::Enter) {
-			//switch do odpowiedniej akcji
-			switch (pointer) 
+			switch (pointer) //switch do odpowiedniej akcji
 			{
 			case 0: tmp=0;
 					break;
@@ -95,7 +80,6 @@ int Pause::handleEvents(sf::Event & event,WorldManager& world)
 				break;
 			}
 		}
-
 		if (pointer < 0) {
 			pointer = mButtons.size()-1;
 		}

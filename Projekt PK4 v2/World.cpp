@@ -4,7 +4,6 @@
 #include <sstream>
 #include <iostream>
 #include "Assets.h"
-
 #define xGravity 0.f
 #define yGravity 4.f
 #define resolution_x 1920
@@ -50,7 +49,6 @@ auto y_collision(float overlapY, bool fromTop, std::weak_ptr<ICollideable> a)
 
 auto x_collision(float overlapX, bool fromLeft, std::weak_ptr<ICollideable> a)
 {
-
 	a.lock()->setVelocity(sf::Vector2f(0.f, a.lock()->getVelocity().y));
 
 	if (fromLeft)
@@ -127,8 +125,6 @@ void World::resolveCollision(std::weak_ptr<ICollideable> a, std::weak_ptr<IColli
 			return;
 		}
 	}
-
-
 	if (a.lock()->ContactBegin(b, fromLeft, fromTop) && b.lock()->ContactBegin(a, fromLeft, fromTop))
 	{
 		if (std::abs(minOverlapX) > std::abs(minOverlapY)) // y overlap
@@ -147,7 +143,6 @@ void World::resolveCollision(std::weak_ptr<ICollideable> a, std::weak_ptr<IColli
 
 void World::update()
 {
-
 	//sprawdzenie czy na mapie
 	sf::FloatRect tmp = mPlayer->getHitBox();
 	tmp.left += mPlayer->getPhysicsPosition().x;
@@ -205,8 +200,6 @@ void World::update()
 
 void World::draw(sf::RenderTarget& target)
 {
-
-
 	for (auto& obj : mWorldObjects)
 		obj->draw(target);
 	for (auto& obj : mTraps)
@@ -221,8 +214,6 @@ void World::handleEvents(sf::Event& event)
 {
 	mPlayer->handleEvents(event);
 }
-
-
 
 void World::loadWorld(std::string path)
 {

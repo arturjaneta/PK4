@@ -1,4 +1,3 @@
-
 #include "Assets.h"
 
 std::map<std::string, SpriteInfo> Assets::sprites;				//mapa zawierajaca nazwy oraz informacje np o animacjach

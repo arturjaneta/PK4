@@ -13,7 +13,7 @@ class Pause
 	std::shared_ptr<SpriteObject > mPointer;
 	std::shared_ptr<SpriteObject > mBackground;
 public:
-	Pause(int LvlCount);
+	Pause(int LvlCount=1);
 	void update();
 	void draw(sf::RenderTarget& target);
 	int handleEvents(sf::Event& event,WorldManager& world);
