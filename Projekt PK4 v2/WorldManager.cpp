@@ -20,6 +20,7 @@ void WorldManager::SetWorld(int World_nb)
 	ActualWorldNb = World_nb;
 }
 
+
 WorldManager::WorldManager():ActualWorldNb(0)
 {
 	int i = 0;

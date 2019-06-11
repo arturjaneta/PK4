@@ -12,8 +12,9 @@ class Pause
 	std::vector<std::shared_ptr<SpriteObject>> mButtons;
 	std::shared_ptr<SpriteObject > mPointer;
 	std::shared_ptr<SpriteObject > mBackground;
+	Settings set;
 public:
-	Pause(int LvlCount=1);
+	Pause(Settings _set=Settings(),int LvlCount = 1);
 	void update();
 	void draw(sf::RenderTarget& target);
 	int handleEvents(sf::Event& event,WorldManager& world);

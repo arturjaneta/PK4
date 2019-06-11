@@ -8,12 +8,12 @@
 #include "Trap.h"
 #include "Enemy.h"
 #include "Exit.h"
-
+#include "Settings.h"
 
 class World
 {
 public:
-	World(std::string path= "Content/Worlds/world0.txt");
+	World(std::string path = "Content/Worlds/world0.txt",Settings _set=Settings());
 	~World() {}
 	void update();
 	void draw(sf::RenderTarget& target);
@@ -21,7 +21,7 @@ public:
 	void loadWorld(std::string path);
 	bool GetIfExit() { return ifExit; }
 private:
-	
+	Settings set;
 	std::shared_ptr<Player> mPlayer;
 	std::shared_ptr<Exit> mExit;
 	std::vector<std::shared_ptr<WorldObject>> mWorldObjects;

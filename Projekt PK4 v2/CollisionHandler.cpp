@@ -16,7 +16,6 @@ auto y_collision(float overlapY, bool fromTop, std::weak_ptr<ICollideable> a)
 auto x_collision(float overlapX, bool fromLeft, std::weak_ptr<ICollideable> a)
 {
 	a.lock()->setVelocity(sf::Vector2f(0.f, a.lock()->getVelocity().y));
-
 	if (fromLeft)
 	{
 		a.lock()->setPhysicsPosition(sf::Vector2f(a.lock()->getPhysicsPosition().x - overlapX, a.lock()->getPhysicsPosition().y));
@@ -27,19 +26,7 @@ auto x_collision(float overlapX, bool fromLeft, std::weak_ptr<ICollideable> a)
 	}
 }
 
-void CollisionHandler::resolveCollision(std::weak_ptr<ICollideable> a, std::weak_ptr<ICollideable> b, std::shared_ptr<Player> mPlayer, sf::Vector2f &RespawnPoint, bool &ifExit)
-{
-	auto tmp = b.lock();
-	auto tmp1 = a.lock();
-	if (a.lock() == mPlayer && typeid(*tmp).name() == typeid(Trap).name()) {					//RTTI
-		mPlayer->death(RespawnPoint);
-		return;
-	}
-	else if (a.lock() == mPlayer && typeid(*tmp).name() == typeid(Exit).name()) {
-		std::cout << "Exit\n";
-		ifExit = true;
-	}
-
+void calculate_overlap(std::weak_ptr<ICollideable> a, std::weak_ptr<ICollideable> b,bool &fromLeft,bool &fromTop, float &minOverlapX, float &minOverlapY) {
 	auto aLeft = a.lock()->getPhysicsPosition().x + a.lock()->getHitBox().left;
 	auto aTop = a.lock()->getPhysicsPosition().y + a.lock()->getHitBox().top;
 	auto aRight = aLeft + a.lock()->getHitBox().width;
@@ -55,12 +42,23 @@ void CollisionHandler::resolveCollision(std::weak_ptr<ICollideable> a, std::weak
 	float overlapTop{ aBottom - bTop };
 	float overlapBottom{ bBottom - aTop };
 
-	bool fromLeft(std::abs(overlapLeft) < std::abs(overlapRight));
-	bool fromTop(std::abs(overlapTop) < std::abs(overlapBottom));
+	fromLeft=(std::abs(overlapLeft) < std::abs(overlapRight));
+	fromTop=(std::abs(overlapTop) < std::abs(overlapBottom));
+	minOverlapX={ fromLeft ? overlapLeft : overlapRight };
+	minOverlapY={ fromTop ? overlapTop : overlapBottom };
+}
 
-	float minOverlapX{ fromLeft ? overlapLeft : overlapRight };
-	float minOverlapY{ fromTop ? overlapTop : overlapBottom };
-
+void special_collision_handler(std::weak_ptr<ICollideable> a, std::weak_ptr<ICollideable> b, std::shared_ptr<Player> mPlayer, sf::Vector2f &RespawnPoint, bool &ifExit,bool fromTop) {
+	auto tmp = b.lock();
+	auto tmp1 = a.lock();
+	if (a.lock() == mPlayer && typeid(*tmp).name() == typeid(Trap).name()) {					//RTTI
+		mPlayer->death(RespawnPoint);
+		return;
+	}
+	else if (a.lock() == mPlayer && typeid(*tmp).name() == typeid(Exit).name()) {
+		std::cout << "Exit\n";
+		ifExit = true;
+	}
 	if (a.lock() == mPlayer && typeid(*tmp).name() == typeid(Enemy).name()) {					//RTTI
 		std::cout << "Kill\n";
 		if (fromTop) {
@@ -91,6 +89,16 @@ void CollisionHandler::resolveCollision(std::weak_ptr<ICollideable> a, std::weak
 			return;
 		}
 	}
+}
+
+
+void CollisionHandler::resolveCollision(std::weak_ptr<ICollideable> a, std::weak_ptr<ICollideable> b, std::shared_ptr<Player> mPlayer, sf::Vector2f &RespawnPoint, bool &ifExit)
+{
+	bool fromLeft,fromTop;
+	float minOverlapX, minOverlapY;
+	calculate_overlap(a,b,fromLeft,fromTop,minOverlapX,minOverlapY);
+	special_collision_handler(a, b, mPlayer, RespawnPoint, ifExit, fromTop);
+
 	if (a.lock()->ContactBegin(b, fromLeft, fromTop) && b.lock()->ContactBegin(a, fromLeft, fromTop))
 	{
 		if (std::abs(minOverlapX) > std::abs(minOverlapY)) // y overlap

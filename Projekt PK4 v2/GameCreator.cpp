@@ -1,12 +1,13 @@
 #include "GameCreator.h"
-#define resolutionx 1920
-#define resolutiony 1080
 
-GameCreator::GameCreator()
+
+GameCreator::GameCreator(int resx,int resy)
 {
-	window = std::make_shared<sf::RenderWindow>(sf::VideoMode(resolutionx, resolutiony), "Platformowka 2D", sf::Style::Fullscreen);
+	set = Settings(resx,resy);
+	window = std::make_shared<sf::RenderWindow>(sf::VideoMode(resx, resy), "Platformowka 2D", sf::Style::Fullscreen);
+	window->setFramerateLimit(60);
 	Assets::loadAssets();
-	pScreen = Pause(world.GetWorldsCount());
+	pScreen = Pause(set,world.GetWorldsCount());
 	world.SetWorld(0);
 }
 
@@ -50,3 +51,4 @@ void GameCreator::RunGameLoop()
 		}
 	}
 }
+

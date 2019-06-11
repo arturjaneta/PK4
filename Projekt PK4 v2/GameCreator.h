@@ -7,6 +7,7 @@
 #include "World.h"
 #include "WorldManager.h"
 #include "Pause.h"
+#include "Settings.h"
 #include <Windows.h>
 
 class GameCreator
@@ -14,12 +15,13 @@ class GameCreator
 	std::shared_ptr<sf::RenderWindow> window;
 	WorldManager world;
 	Pause pScreen;
+	Settings set;
 	sf::Clock clk;
 	sf::Time acc;
 	sf::Time step = sf::seconds(1.f / 60.f);
 	int pause = 0;
 public:
-	GameCreator();
+	GameCreator(int resx=1920,int resy=1080);
 	void RunGameLoop();
 };
 

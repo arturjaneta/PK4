@@ -10,12 +10,17 @@
 #include "WorldManager.h"
 #include "Pause.h"
 #include "GameCreator.h"
+#include "Settings.h"
 #include <Windows.h>
 #include <vld.h> 
+#define resolution_x 1920
+#define resolution_y 1080
+
+
 
 int main()
 {
-	GameCreator game;
+	GameCreator game(resolution_x, resolution_y);
 	game.RunGameLoop();
 	return 0;
 }

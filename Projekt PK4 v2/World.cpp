@@ -5,13 +5,14 @@
 #include <iostream>
 #include "Assets.h"
 #include "CollisionHandler.h"
+
 #define xGravity 0.f
 #define yGravity 4.f
-#define resolution_x 1920
-#define resolution_y 1080
 
-World::World(std::string path):ifExit(false)
+
+World::World(std::string path, Settings _set):ifExit(false)
 {
+	set = _set;
 	loadWorld(path);
 	mPlayer = std::make_shared<Player>(Assets::sprites["player"], RespawnPoint);
 	mCollideables.push_back(mPlayer);
@@ -26,7 +27,7 @@ void World::update()
 	tmp.left += mPlayer->getPhysicsPosition().x;
 	tmp.top += mPlayer->getPhysicsPosition().y;
 
-	if (!tmp.intersects(sf::FloatRect(0.f, 0.f, resolution_x, resolution_y)))
+	if (!tmp.intersects(sf::FloatRect(0.f, 0.f, set.getResolutionX(), set.getResolutionY())))
 		mPlayer->death(RespawnPoint);
 	//grawitacja
 	mPlayer->update();
