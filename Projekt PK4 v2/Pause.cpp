@@ -1,17 +1,19 @@
 #include "Pause.h"
 #include <iostream>
+#define resolutionx 1920
+#define resolutiony 1080
 
 Pause::Pause(int LvlCount):pointer(0)
 {
 	WorldsCount = LvlCount;
-	mPointer = std::make_shared<SpriteObject>(Assets::sprites["pointer"], sf::Vector2f(560, 0));
 	mBackground=std::make_shared<SpriteObject>(Assets::sprites["pause"], sf::Vector2f(0, 0));
-	mButtons.push_back(std::make_shared<SpriteObject>(Assets::sprites["buttonbig2"], sf::Vector2f(660, 0)));
-	mButtons.push_back(std::make_shared<SpriteObject>(Assets::sprites["buttonbig1"], sf::Vector2f(660, 152)));
+	mButtons.push_back(std::make_shared<SpriteObject>(Assets::sprites["buttonbig2"], sf::Vector2f((resolutionx-600)/2, 0)));
+	mButtons.push_back(std::make_shared<SpriteObject>(Assets::sprites["buttonbig1"], sf::Vector2f((resolutionx - 600) / 2, 152)));
+	mPointer = std::make_shared<SpriteObject>(Assets::sprites["pointer"], sf::Vector2f(mButtons[0]->getRenderPosition().x-100, 0));
 	for (int i = 0; i < 3; i++) {
-		for (int j = 0; j < 9; j++) {
+		for (int j = 0; 400+j*80 < resolutiony; j++) {
 			if (LvlCount > 0) {
-				auto newObj = std::make_shared<SpriteObject>(Assets::sprites["buttonsmall"], sf::Vector2f(180 + i * 580, 320 + j * 80));
+				auto newObj = std::make_shared<SpriteObject>(Assets::sprites["buttonsmall"], sf::Vector2f(i * 400+(i+1)*(resolutionx-1200)/4, 320 + j * 80));
 				mButtons.push_back(newObj);
 			}
 			LvlCount--;
@@ -49,7 +51,7 @@ void Pause::draw(sf::RenderTarget & target)
 		for (int j = 0; j <9 ; j++) {
 			if (tmp < WorldsCount) {
 				text.setString(std::to_string(tmp + 1));
-				text.setPosition(sf::Vector2f(435 + i * 580, 330 + j * 80));
+				text.setPosition(sf::Vector2f(255+ i * 400 + (i + 1)*(resolutionx - 1200) / 4, 330 + j * 80));
 				target.draw(text);
 			}
 			tmp++;
@@ -70,12 +72,12 @@ int Pause::handleEvents(sf::Event & event,WorldManager& world)
 		if (event.key.code == sf::Keyboard::Enter) {
 			switch (pointer) //switch do odpowiedniej akcji
 			{
-			case 0: tmp=0;
+			case 0: tmp=0;	//resume
 					break;
-			case 1: tmp=2;
+			case 1: tmp=2;	//exit
 				break;
 			default:
-				world.SetWorld(pointer - 2);
+				world.SetWorld(pointer - 2);		//world change
 				tmp = 0;
 				break;
 			}
