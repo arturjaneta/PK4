@@ -7,13 +7,13 @@ Pause::Pause(int LvlCount):pointer(0)
 {
 	WorldsCount = LvlCount;
 	mBackground=std::make_shared<SpriteObject>(Assets::sprites["pause"], sf::Vector2f(0, 0));
-	mButtons.push_back(std::make_shared<SpriteObject>(Assets::sprites["buttonbig2"], sf::Vector2f((resolutionx-600)/2, 0)));
-	mButtons.push_back(std::make_shared<SpriteObject>(Assets::sprites["buttonbig1"], sf::Vector2f((resolutionx - 600) / 2, 152)));
-	mPointer = std::make_shared<SpriteObject>(Assets::sprites["pointer"], sf::Vector2f(mButtons[0]->getRenderPosition().x-100, 0));
+	mButtons.push_back(std::make_shared<SpriteObject>(Assets::sprites["buttonbig2"], sf::Vector2f((resolutionx- Assets::sprites["buttonbig2"].mFrameDim.x)/2, 0)));
+	mButtons.push_back(std::make_shared<SpriteObject>(Assets::sprites["buttonbig1"], sf::Vector2f((resolutionx - Assets::sprites["buttonbig2"].mFrameDim.x) / 2, Assets::sprites["buttonbig2"].mFrameDim.y+12)));
+	mPointer = std::make_shared<SpriteObject>(Assets::sprites["pointer"], sf::Vector2f(mButtons[0]->getRenderPosition().x- (Assets::sprites["pointer"].mFrameDim.x+12), 0));
 	for (int i = 0; i < 3; i++) {
-		for (int j = 0; 400+j*80 < resolutiony; j++) {
+		for (int j = 0; Assets::sprites["buttonsmall"].mFrameDim.x +j* (Assets::sprites["buttonsmall"].mFrameDim.y+4) < resolutiony; j++) {
 			if (LvlCount > 0) {
-				auto newObj = std::make_shared<SpriteObject>(Assets::sprites["buttonsmall"], sf::Vector2f(i * 400+(i+1)*(resolutionx-1200)/4, 320 + j * 80));
+				auto newObj = std::make_shared<SpriteObject>(Assets::sprites["buttonsmall"], sf::Vector2f(i * Assets::sprites["buttonsmall"].mFrameDim.x +(i+1)*(resolutionx-3* Assets::sprites["buttonsmall"].mFrameDim.x)/4, 2*(Assets::sprites["buttonbig2"].mFrameDim.y + 12)+40+ j * (Assets::sprites["buttonsmall"].mFrameDim.y + 4)));
 				mButtons.push_back(newObj);
 			}
 			LvlCount--;
@@ -22,7 +22,7 @@ Pause::Pause(int LvlCount):pointer(0)
 }
 void Pause::update()
 {
-	mPointer->setPosition(mButtons[pointer]->getRenderPosition()-sf::Vector2f(100, -(mButtons[pointer]->getSpriteInfo().mHitBox.height-76)/2));
+	mPointer->setPosition(mButtons[pointer]->getRenderPosition()-sf::Vector2f((Assets::sprites["pointer"].mFrameDim.x + 12), -(mButtons[pointer]->getSpriteInfo().mHitBox.height- Assets::sprites["buttonsmall"].mFrameDim.y)/2));
 	for (auto& obj : mButtons) {
 		obj->update();
 	}
@@ -51,7 +51,7 @@ void Pause::draw(sf::RenderTarget & target)
 		for (int j = 0; j <9 ; j++) {
 			if (tmp < WorldsCount) {
 				text.setString(std::to_string(tmp + 1));
-				text.setPosition(sf::Vector2f(255+ i * 400 + (i + 1)*(resolutionx - 1200) / 4, 330 + j * 80));
+				text.setPosition(sf::Vector2f(255+ i * Assets::sprites["buttonsmall"].mFrameDim.x + (i + 1)*(resolutionx - 3* Assets::sprites["buttonsmall"].mFrameDim.x) / 4, 2 * (Assets::sprites["buttonbig2"].mFrameDim.y + 12) + 50 + j * (Assets::sprites["buttonsmall"].mFrameDim.y + 4)));
 				target.draw(text);
 			}
 			tmp++;

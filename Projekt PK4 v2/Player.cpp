@@ -1,4 +1,3 @@
-
 #include "Player.h"
 #define movSpeed 2.f
 
@@ -87,7 +86,7 @@ void Player::handleEvents(sf::Event& event)							//poruszanie sie
 
 bool Player::ContactBegin(std::weak_ptr<ICollideable> object, bool fromLeft, bool fromTop)
 {
-	if (object.lock()->isStatic())
+	if (object.lock()->isStatic()&&fromTop&&Velocity.y<0.2)
 		onGround = true;
 
 	return true;

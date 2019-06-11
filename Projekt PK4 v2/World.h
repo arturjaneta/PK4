@@ -15,13 +15,9 @@ class World
 public:
 	World(std::string path= "Content/Worlds/world0.txt");
 	~World() {}
-
 	void update();
 	void draw(sf::RenderTarget& target);
 	void handleEvents(sf::Event& event);
-
-	bool checkCollision(std::weak_ptr<ICollideable> a, std::weak_ptr<ICollideable> b);
-	void resolveCollision(std::weak_ptr<ICollideable> a, std::weak_ptr<ICollideable> b);
 	void loadWorld(std::string path);
 	bool GetIfExit() { return ifExit; }
 private:

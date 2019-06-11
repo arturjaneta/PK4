@@ -30,14 +30,12 @@ void SpriteObject::draw(sf::RenderTarget& target)
 			CurrentFrame = mEndFrame;
 	}
 
-	// Calculate frame position
+	// pozycja klatki
 	int frameX = (CurrentFrame%_SpriteInfo.mFramesPerRow)*_SpriteInfo.mFrameDim.x;
 	int frameY = (CurrentFrame / _SpriteInfo.mFramesPerRow)*_SpriteInfo.mFrameDim.y;
 
 	Sprite.setTextureRect(sf::IntRect(frameX, frameY, _SpriteInfo.mFrameDim.x, _SpriteInfo.mFrameDim.y));
 
-	// Stop here
-	//*****************************************************************************************
 	target.draw(Sprite); 
 }
 

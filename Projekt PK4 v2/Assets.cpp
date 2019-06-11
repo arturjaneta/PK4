@@ -15,8 +15,8 @@ void Assets::loadAssets()
 	sprites["buttonsmall"] = SpriteInfo("Content/Textures/buttonsmall.png");
 	sprites["acid"] = SpriteInfo("Content/Textures/acid.png");
 	sprites["bigbox"] = SpriteInfo("Content/Textures/bigbox.png");
-	sprites["enemy_left"] = SpriteInfo("Content/Textures/enemy_left.png");
-	sprites["enemy_right"] = SpriteInfo("Content/Textures/enemy_right.png");
+	sprites["enemy"] = SpriteInfo("Content/Textures/enemy.png",2,2);
+	sprites["enemy"].mHitBox = sf::FloatRect(0.f, 0.f, 89.f, 98.f);
 	sprites["filar"] = SpriteInfo("Content/Textures/filar.png");
 	sprites["kolce_dol"] = SpriteInfo("Content/Textures/kolce_dol.png");
 	sprites["kolce_gora"] = SpriteInfo("Content/Textures/kolce_gora.png");

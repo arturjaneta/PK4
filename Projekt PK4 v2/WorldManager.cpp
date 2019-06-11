@@ -1,5 +1,4 @@
 #include "WorldManager.h"
-
 #include <string>
 #include <fstream>
 
