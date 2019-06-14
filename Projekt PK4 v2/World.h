@@ -22,7 +22,7 @@ public:
 	bool GetIfExit() { return ifExit; }
 private:
 	Settings set;
-	std::shared_ptr<Player> mPlayer;
+	std::shared_ptr<Player> mPlayer;		//inteligetne wskazniki
 	std::shared_ptr<Exit> mExit;
 	std::vector<std::shared_ptr<WorldObject>> mWorldObjects;
 	std::vector<std::weak_ptr<ICollideable>> mCollideables;

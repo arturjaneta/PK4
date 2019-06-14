@@ -22,9 +22,9 @@ Pause::Pause(Settings _set,int LvlCount):pointer(0),set(_set)
 void Pause::update()
 {
 	mPointer->setPosition(mButtons[pointer]->getRenderPosition()-sf::Vector2f((Assets::sprites["pointer"].mFrameDim.x + 12), -(mButtons[pointer]->getSpriteInfo().mHitBox.height- Assets::sprites["buttonsmall"].mFrameDim.y)/2));
-	for (auto& obj : mButtons) {
-		obj->update();
-	}
+	
+	for_each(mButtons.begin(), mButtons.end(), [](std::shared_ptr<SpriteObject> &button) {button->update(); });			//algorytmy i iteratiory stl
+
 	mBackground->update();
 	mPointer->update();
 }

@@ -20,7 +20,6 @@ void GameCreator::RunGameLoop()
 			{
 				if (event.type == sf::Event::Closed)
 					window->close();
-				
 				if (event.type == sf::Event::KeyPressed&&event.key.code == sf::Keyboard::Escape) {
 					std::cout << "PAUSE\n";
 					if (pause == 0) {
@@ -34,7 +33,7 @@ void GameCreator::RunGameLoop()
 					world.GetActualWorld()->handleEvents(event);
 				else
 					pause = pScreen.handleEvents(event, world);
-				if (pause == 2)
+				if (pause == 2)		//exit
 					window->close();
 			}
 			if (pause != 1)
