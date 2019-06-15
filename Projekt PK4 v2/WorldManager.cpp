@@ -8,7 +8,7 @@ void WorldManager::SetWorld(int World_nb)
 	path_1 = "Content/Worlds/world";
 	path_2 = ".txt";
 	if (World_nb > WorldsCount - 1) {
-		ActualWorld = std::make_shared<World>("Content/Worlds/world0.txt");	//od poczatku
+		ActualWorld = std::make_shared<World>("Content/Worlds/world0.txt",set);	//od poczatku
 		ActualWorldNb = 0;
 		return;
 	}
@@ -16,13 +16,14 @@ void WorldManager::SetWorld(int World_nb)
 		return;
 	}
 	path = path_1 + std::to_string(World_nb) + path_2;
-	ActualWorld = std::make_shared<World>(path);
+	ActualWorld = std::make_shared<World>(path,set);
 	ActualWorldNb = World_nb;
 }
 
 
-WorldManager::WorldManager():ActualWorldNb(0)
+WorldManager::WorldManager(Settings _set):ActualWorldNb(0)
 {
+	set = _set;
 	int i = 0;
 	std::fstream file;
 	do {

@@ -4,6 +4,7 @@
 GameCreator::GameCreator(int resx,int resy)
 {
 	set = Settings(resx,resy);
+	world = WorldManager(set);
 	window = std::make_shared<sf::RenderWindow>(sf::VideoMode(resx, resy), "Platformowka 2D", sf::Style::Fullscreen);
 	window->setFramerateLimit(60);
 	Assets::loadAssets();

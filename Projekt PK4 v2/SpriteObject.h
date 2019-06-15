@@ -6,11 +6,12 @@
 
 #include "IRenderable.h"
 #include "SpriteInfo.h"
+#include "Settings.h"
 
 class SpriteObject : public IRenderable
 {
 public:
-	SpriteObject(SpriteInfo& info, sf::Vector2f pos);
+	SpriteObject(SpriteInfo& info, sf::Vector2f pos,Settings _set);
 	virtual ~SpriteObject() {}
 
 	virtual void update();
@@ -36,6 +37,7 @@ protected:
 	int mStartFrame;
 	int mEndFrame;
 	int mFrameDir;
+	Settings set;
 };
 
 #endif // SPRITEOBJECT_H

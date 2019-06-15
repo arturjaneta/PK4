@@ -6,17 +6,13 @@
 #include "Assets.h"
 #include "CollisionHandler.h"
 
-#define xGravity 0.f
-#define yGravity 4.f
-
-
 World::World(std::string path, Settings _set):ifExit(false)
 {
 	set = _set;
 	loadWorld(path);
-	mPlayer = std::make_shared<Player>(Assets::sprites["player"], RespawnPoint);
+	mPlayer = std::make_shared<Player>(Assets::sprites["player"], RespawnPoint,set);
 	mCollideables.push_back(mPlayer);
-	Gravity = sf::Vector2f(xGravity, yGravity);
+	Gravity = sf::Vector2f(set.getXgravity(), set.getYgravity());
 }
 
 
@@ -86,35 +82,43 @@ void World::loadWorld(std::string path)
 		char z;
 		//respawn
 		file >> x >> y;
-		RespawnPoint = sf::Vector2f(x, y);
+		x *= set.getScale();
+		y *= set.getScale();
+		RespawnPoint = sf::Vector2f(x*set.getScale(), y*set.getScale());
 		file >> x >> y;
-		auto newObj = std::make_shared<Exit>(Assets::sprites["exit"], sf::Vector2f(x, y));
+		x *= set.getScale();
+		y *= set.getScale();
+		auto newObj = std::make_shared<Exit>(Assets::sprites["exit"], sf::Vector2f(x, y),set);
 		mExit = newObj;
 		mCollideables.push_back(newObj);
 		while (!file.eof())
 		{
 			file >> id >> x >> y >> z;
+			x *= set.getScale();
+			y *= set.getScale();
 			if (z == 'n') {
-				auto newObj = std::make_shared<WorldObject>(Assets::sprites[id], sf::Vector2f(x, y));
+				auto newObj = std::make_shared<WorldObject>(Assets::sprites[id], sf::Vector2f(x, y), set);
 				mWorldObjects.push_back(newObj);
 			}
 			else if (z == 't') {
-				auto newObj = std::make_shared<Trap>(Assets::sprites[id], sf::Vector2f(x, y));
+				auto newObj = std::make_shared<Trap>(Assets::sprites[id], sf::Vector2f(x, y), set);
 				mTraps.push_back(newObj);
 				mCollideables.push_back(newObj);
 			}
 			else if (z == 'e') {
 				int tmp;
 				file >> tmp;
-				auto newObj = std::make_shared<Enemy>(Assets::sprites[id], sf::Vector2f(x, y), tmp);
+				auto newObj = std::make_shared<Enemy>(Assets::sprites[id], sf::Vector2f(x, y), tmp*set.getScale(), set);
 				mEnemies.push_back(newObj);
 				mCollideables.push_back(newObj);
 			}
 			else {
-				auto newObj = std::make_shared<WorldObject>(Assets::sprites[id], sf::Vector2f(x, y));
+				auto newObj = std::make_shared<WorldObject>(Assets::sprites[id], sf::Vector2f(x, y), set);
 				mWorldObjects.push_back(newObj);
 				mCollideables.push_back(newObj);
 			}
 		}
+		mWorldObjects.pop_back();
+		mCollideables.pop_back();
 	}
 }

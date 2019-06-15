@@ -1,16 +1,14 @@
 #pragma once
-#ifndef ICOLLIDEABLE_H
-#define ICOLLIDEABLE_H
 
 #include <memory>
 
 class ICollideable
 {
 public:
-	ICollideable(sf::FloatRect hitbox, sf::Vector2f dim, sf::Vector2f pos = sf::Vector2f(), bool _static = true)
+	ICollideable(sf::FloatRect hitbox, sf::Vector2f dim, Settings set, sf::Vector2f pos = sf::Vector2f(), bool _static = true)
 	{
-		HitBox = hitbox;
-		Dimensions = dim;
+		HitBox = sf::FloatRect(hitbox.left*set.getScale(), hitbox.top*set.getScale(), hitbox.width*set.getScale(), hitbox.height*set.getScale());
+		Dimensions = sf::Vector2f(dim.x*set.getScale(), dim.y*set.getScale());
 		PhysicsPosition = pos;
 		Static = _static;
 		CollisionActive = true;
@@ -44,5 +42,3 @@ protected:
 	bool CollisionActive;
 	bool Static;
 };
-
-#endif // ICOLLIDEABLE_H

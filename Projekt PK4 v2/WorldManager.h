@@ -6,8 +6,10 @@ class WorldManager
 	int ActualWorldNb;
 	int WorldsCount;
 	std::shared_ptr<World> ActualWorld;
+	Settings set;
 public:
-	WorldManager();
+	WorldManager() {};
+	WorldManager(Settings set);
 	void SetWorld(int World_nb);
 	void SetNextWorld();
 	int GetWorldsCount() { return WorldsCount; }

@@ -16,9 +16,6 @@ class GameCreator
 	WorldManager world;
 	Pause pScreen;
 	Settings set;
-	sf::Clock clk;
-	sf::Time acc;
-	sf::Time step = sf::seconds(1.f / 60.f);
 	int pause = 0;
 public:
 	GameCreator(int resx=1920,int resy=1080);

@@ -5,14 +5,15 @@
 Pause::Pause(Settings _set,int LvlCount):pointer(0),set(_set)
 {
 	WorldsCount = LvlCount;
-	mBackground=std::make_shared<SpriteObject>(Assets::sprites["pause"], sf::Vector2f(0, 0));
-	mButtons.push_back(std::make_shared<SpriteObject>(Assets::sprites["buttonbig2"], sf::Vector2f((set.getResolutionX() - Assets::sprites["buttonbig2"].mFrameDim.x)/2, 0)));
-	mButtons.push_back(std::make_shared<SpriteObject>(Assets::sprites["buttonbig1"], sf::Vector2f((set.getResolutionX() - Assets::sprites["buttonbig2"].mFrameDim.x) / 2, Assets::sprites["buttonbig2"].mFrameDim.y+12)));
-	mPointer = std::make_shared<SpriteObject>(Assets::sprites["pointer"], sf::Vector2f(mButtons[0]->getRenderPosition().x- (Assets::sprites["pointer"].mFrameDim.x+12), 0));
+	mBackground=std::make_shared<SpriteObject>(Assets::sprites["pause"], sf::Vector2f(0, 0), set);
+	mButtons.push_back(std::make_shared<SpriteObject>(Assets::sprites["buttonbig2"], sf::Vector2f((set.getResolutionX() - Assets::sprites["buttonbig2"].mFrameDim.x)/2, 0), set));
+	mButtons.push_back(std::make_shared<SpriteObject>(Assets::sprites["buttonbig1"], sf::Vector2f((set.getResolutionX() - Assets::sprites["buttonbig2"].mFrameDim.x) / 2, Assets::sprites["buttonbig2"].mFrameDim.y+12), set));
+	mPointer = std::make_shared<SpriteObject>(Assets::sprites["pointer"], sf::Vector2f(mButtons[0]->getRenderPosition().x- (Assets::sprites["pointer"].mFrameDim.x+12), 0), set);
 	for (int i = 0; i < 3; i++) {
 		for (int j = 0; Assets::sprites["buttonsmall"].mFrameDim.x +j* (Assets::sprites["buttonsmall"].mFrameDim.y+4) < set.getResolutionY(); j++) {
 			if (LvlCount > 0) {
-				auto newObj = std::make_shared<SpriteObject>(Assets::sprites["buttonsmall"], sf::Vector2f(i * Assets::sprites["buttonsmall"].mFrameDim.x +(i+1)*(set.getResolutionX() -3* Assets::sprites["buttonsmall"].mFrameDim.x)/4, 2*(Assets::sprites["buttonbig2"].mFrameDim.y + 12)+40+ j * (Assets::sprites["buttonsmall"].mFrameDim.y + 4)));
+				auto newObj = std::make_shared<SpriteObject>(Assets::sprites["buttonsmall"], sf::Vector2f(i * Assets::sprites["buttonsmall"].mFrameDim.x +(i+1)*(set.getResolutionX() -3* Assets::sprites["buttonsmall"].mFrameDim.x)/4, 
+					2*(Assets::sprites["buttonbig2"].mFrameDim.y + 12)+40+ j * (Assets::sprites["buttonsmall"].mFrameDim.y + 4)), set);
 				mButtons.push_back(newObj);
 			}
 			LvlCount--;

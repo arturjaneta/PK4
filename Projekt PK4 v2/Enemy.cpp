@@ -1,7 +1,7 @@
 #include "Enemy.h"
 
 
-Enemy::Enemy(SpriteInfo & info, sf::Vector2f pos,int shift):WorldObject(info, pos),
+Enemy::Enemy(SpriteInfo & info, sf::Vector2f pos,int shift,Settings set):WorldObject(info, pos,set),
 Shift(shift),FirstPosition(pos)
 {
 	Static = false;

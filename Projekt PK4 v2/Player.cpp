@@ -1,10 +1,9 @@
 #include "Player.h"
-#define movSpeed 2.f
 
-
-Player::Player(SpriteInfo& info, sf::Vector2f pos) :
-	WorldObject(info, pos)
+Player::Player(SpriteInfo& info, sf::Vector2f pos,Settings _set) :
+	WorldObject(info, pos,_set)
 {
+	set = _set;
 	Static = false;
 	onGround = false;
 }
@@ -58,16 +57,16 @@ void Player::handleEvents(sf::Event& event)							//poruszanie sie
 	if (event.type == sf::Event::KeyPressed)					
 	{
 		if (event.key.code == sf::Keyboard::Space && onGround) {
-			Velocity.y = -movSpeed*2;
+			Velocity.y = -(set.getPlayerSpeed())*2;
 			onGround = false;
 		}
 
 		if (event.key.code == sf::Keyboard::A) {
-			Velocity.x = -movSpeed;
+			Velocity.x = -set.getPlayerSpeed();
 			Direction = left;
 		}
 		else if (event.key.code == sf::Keyboard::D) {
-			Velocity.x = movSpeed;
+			Velocity.x = set.getPlayerSpeed();
 			Direction = right;
 		}
 	}

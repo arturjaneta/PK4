@@ -1,7 +1,7 @@
 #include "Exit.h"
 
-Exit::Exit(SpriteInfo & info, sf::Vector2f pos) :
-	WorldObject(info, pos)
+Exit::Exit(SpriteInfo & info, sf::Vector2f pos,Settings set) :
+	WorldObject(info, pos,set)
 {
 }
 void Exit::update()

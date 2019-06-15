@@ -2,11 +2,13 @@
 #include "SpriteObject.h"
 
 
-SpriteObject::SpriteObject(SpriteInfo& info, sf::Vector2f pos) : IRenderable(),
+SpriteObject::SpriteObject(SpriteInfo& info, sf::Vector2f pos,Settings _set) : IRenderable(),
 _SpriteInfo(info),
 CurrentFrame(0),FrameDelay(100.f), mLoopAnim(true), mStartFrame(0), mEndFrame(0), mFrameDir(1)
 {
+	set = _set;
 	Sprite = sf::Sprite(info.mTexture);
+	Sprite.setScale(set.getScale(), set.getScale());
 	RenderPosition = pos;
 }
 

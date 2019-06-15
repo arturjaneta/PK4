@@ -1,10 +1,7 @@
 #pragma once
-#ifndef PLAYER_H
-#define PLAYER_H
-
 #include <SFML/Graphics.hpp>
 #include "WorldObject.h"
-
+#include "Settings.h"
 enum Dir
 {
 	left,right,stat_left,stat_right
@@ -14,7 +11,7 @@ enum Dir
 class Player :public WorldObject
 {
 public:
-	Player(SpriteInfo& info, sf::Vector2f pos);
+	Player(SpriteInfo& info, sf::Vector2f pos,Settings _set);
 	void update();
 	void death(sf::Vector2f pos);
 	void draw(sf::RenderTarget& target);
@@ -23,6 +20,5 @@ public:
 private:
 	bool onGround;
 	enum Dir Direction;		//do animacji
+	Settings set;
 };
-
-#endif // PLAYER_H

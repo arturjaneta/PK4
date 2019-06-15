@@ -2,8 +2,8 @@
 
 
 
-Trap::Trap(SpriteInfo & info, sf::Vector2f pos) :
-	WorldObject(info, pos)
+Trap::Trap(SpriteInfo & info, sf::Vector2f pos,Settings set) :
+	WorldObject(info, pos,set)
 {
 }
 
