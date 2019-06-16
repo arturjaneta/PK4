@@ -8,7 +8,6 @@
 #include "WorldManager.h"
 #include "Pause.h"
 #include "Settings.h"
-#include <Windows.h>
 
 class GameCreator
 {

@@ -48,12 +48,12 @@ void calculate_overlap(std::weak_ptr<ICollideable> a, std::weak_ptr<ICollideable
 	minOverlapY={ fromTop ? overlapTop : overlapBottom };
 }
 
-void special_collision_handler(std::weak_ptr<ICollideable> a, std::weak_ptr<ICollideable> b, std::shared_ptr<Player> mPlayer, sf::Vector2f &RespawnPoint, bool &ifExit,bool fromTop) {
+bool special_collision_handler(std::weak_ptr<ICollideable> a, std::weak_ptr<ICollideable> b, std::shared_ptr<Player> mPlayer, sf::Vector2f &RespawnPoint, bool &ifExit,bool fromTop) {
 	auto tmp = b.lock();
 	auto tmp1 = a.lock();
 	if (a.lock() == mPlayer && typeid(*tmp).name() == typeid(Trap).name()) {					//RTTI
 		mPlayer->death(RespawnPoint);
-		return;
+		return true;
 	}
 	else if (a.lock() == mPlayer && typeid(*tmp).name() == typeid(Exit).name()) {
 		std::cout << "Exit\n";
@@ -66,12 +66,12 @@ void special_collision_handler(std::weak_ptr<ICollideable> a, std::weak_ptr<ICol
 			b.lock()->setPhysicsPosition(sf::Vector2f(500, 1500));	// poza ekran
 			b.lock()->setVelocity(sf::Vector2f(0, 0));
 			b.lock()->setStatic(true);
-			return;
+			return true;
 		}
 		else {
 			std::cout << "Kill player\n";
 			mPlayer->death(RespawnPoint);
-			return;
+			return true;
 		}
 	}
 	else if ((b.lock() == mPlayer && typeid(*tmp1).name() == typeid(Enemy).name()))
@@ -81,14 +81,15 @@ void special_collision_handler(std::weak_ptr<ICollideable> a, std::weak_ptr<ICol
 			a.lock()->setPhysicsPosition(sf::Vector2f(500, 1500));		//poza ekran
 			a.lock()->setVelocity(sf::Vector2f(0, 0));
 			a.lock()->setStatic(true);
-			return;
+			return true;
 		}
 		else {
 			std::cout << "Kill player\n";
 			mPlayer->death(RespawnPoint);
-			return;
+			return true;
 		}
 	}
+	return false;
 }
 
 
@@ -97,7 +98,8 @@ void CollisionHandler::resolveCollision(std::weak_ptr<ICollideable> a, std::weak
 	bool fromLeft,fromTop;
 	float minOverlapX, minOverlapY;
 	calculate_overlap(a,b,fromLeft,fromTop,minOverlapX,minOverlapY);
-	special_collision_handler(a, b, mPlayer, RespawnPoint, ifExit, fromTop);
+	if (special_collision_handler(a, b, mPlayer, RespawnPoint, ifExit, fromTop))
+		return;
 
 	if (a.lock()->ContactBegin(b, fromLeft, fromTop) && b.lock()->ContactBegin(a, fromLeft, fromTop))
 	{
