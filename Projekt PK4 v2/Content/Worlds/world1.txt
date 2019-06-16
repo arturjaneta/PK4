@@ -1,3 +1,35 @@
-0 0
-347 817
-platforma3x_poziom 0 900 c
+130 900
+1861 28
+background2 0 0 n
+platforma3x_poziom 596 614 c
+platforma3x_poziom 210 876 c
+platforma3x_poziom 1200 330 c
+platforma3x_poziom 713 330 c
+platforma3x_poziom 326 330 c
+platforma3x_poziom -161 330 c
+platforma3x_poziom 190 110 c
+platforma3x_poziom 577 110 c
+platforma3x_poziom 1451 110 c
+platforma3x_poziom 1838 110 c
+enemy 803 953 e 100
+kolce_gora 1130 1033 t
+kolce_gora 1560 1033 t
+bigbox 70 970 c
+bigbox 488 770 c
+bigbox 10 220 c
+bigbox 1760 550 c
+smallbox 1174 605 c
+smallbox 1374 605 c
+smallbox 1574 605 c
+smallbox 1864 441 c
+smallbox 1656 375 c
+smallbox 350 672 c
+smallbox 1200 150 c
+smallbox 1050 140 c
+smallbox 1350 150 c
+smallbox 1290 1022 c
+smallbox 1720 1022 c
+ramka_pionowo -1 0 c
+ramka_pionowo 1911 0 c
+ramka_poziomo 10 0 c
+ramka_poziomo 10 1070 c
