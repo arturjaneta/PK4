@@ -17,7 +17,7 @@ public:
 	virtual bool ContactBegin(std::weak_ptr<ICollideable> object, bool fromLeft, bool fromTop) { return true; }
 	virtual void ContactEnd(std::weak_ptr<ICollideable> object) {}
 
-	// Mutators
+	// Setters
 	void setHitBox(sf::FloatRect hitbox) { HitBox = hitbox; }
 	void setDimensions(sf::Vector2f dim) { Dimensions = dim; }
 	void setPhysicsPosition(sf::Vector2f pos) { PhysicsPosition = pos; }
@@ -25,7 +25,7 @@ public:
 	void setStatic(bool stat) { Static=stat; }
 	void setCollisionActive(bool act) { CollisionActive = act; }
 
-	// Accessors
+	// Getters
 	sf::FloatRect getHitBox() { return HitBox; }
 	sf::Vector2f getDimensions() { return Dimensions; }
 	sf::Vector2f& getPhysicsPosition() { return PhysicsPosition; }

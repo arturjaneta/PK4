@@ -1,6 +1,4 @@
 #pragma once
-#ifndef WORLDOBJECT_H
-#define WORLDOBJECT_H
 
 #include "SpriteObject.h"
 #include "IColliderable.h"
@@ -15,5 +13,3 @@ public:
 
 private:
 };
-
-#endif // WORLDOBJECT_H

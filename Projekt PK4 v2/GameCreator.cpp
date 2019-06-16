@@ -22,7 +22,6 @@ void GameCreator::RunGameLoop()
 				if (event.type == sf::Event::Closed)
 					window->close();
 				if (event.type == sf::Event::KeyPressed&&event.key.code == sf::Keyboard::Escape) {
-					std::cout << "PAUSE\n";
 					if (pause == 0) {
 						pause = 1;
 					}

@@ -1,6 +1,4 @@
 #pragma once
-#ifndef SPRITEOBJECT_H
-#define SPRITEOBJECT_H
 
 #include <SFML/Graphics.hpp>
 
@@ -16,11 +14,10 @@ public:
 
 	virtual void update();
 	virtual void draw(sf::RenderTarget& target);
-
-	// Mutators
+	// Setters
 	virtual void setPosition(sf::Vector2f pos) { RenderPosition = pos; }
 	void setFrameLoop(int start, int stop, bool loop = true);
-	// Accessors
+	// Getters
 	SpriteInfo getSpriteInfo() { return _SpriteInfo; }
 	sf::Sprite& getSprite() { return Sprite; }
 	sf::Vector2f getRenderPosition() { return RenderPosition; }
@@ -39,5 +36,3 @@ protected:
 	int mFrameDir;
 	Settings set;
 };
-
-#endif // SPRITEOBJECT_H

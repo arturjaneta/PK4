@@ -17,7 +17,7 @@ void Player::update()
 	//animacje
 	if (onGround) {
 		if (Direction == left)
-			setFrameLoop(16, 23);
+			setFrameLoop(16, 23);		//pozycja w tablicy tekstur
 		else if(Direction == right)
 			setFrameLoop(0, 7);
 		else if (Direction == stat_left)

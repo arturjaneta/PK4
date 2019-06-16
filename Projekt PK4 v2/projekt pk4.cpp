@@ -8,7 +8,7 @@
 
 int main(int argc, char ** argv)
 {
-	GameCreator game(std::stoi(argv[1]), std::stoi(argv[2]));
+	GameCreator game(std::stoi(argv[1]), std::stoi(argv[2]));	//arg:rozdzielczosc
 	game.RunGameLoop();
 	return 0;
 }
