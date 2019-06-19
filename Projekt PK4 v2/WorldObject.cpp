@@ -3,20 +3,20 @@
 
 WorldObject::WorldObject(SpriteInfo& info, sf::Vector2f pos,Settings _set) :
 	SpriteObject(info, pos, _set),
-	ICollideable(info.mHitBox, info.mFrameDim, _set, pos)
+	ICollideable(info.HitBox, info.FrameDim, _set, pos)
 {
 }
 
-void WorldObject::update()
+void WorldObject::Update()
 {
-	SpriteObject::update();
+	SpriteObject::Update();
 
 	OldPhysicsPosition = PhysicsPosition;				//zapsanie poprzedniej pozycji
 	PhysicsPosition += Velocity;						//ustawienie nowej pozycji
 }
 
-void WorldObject::draw(sf::RenderTarget& target)
+void WorldObject::Draw(sf::RenderTarget& target)
 {
-	SpriteObject::draw(target);
+	SpriteObject::Draw(target);
 	RenderPosition = PhysicsPosition;
 }

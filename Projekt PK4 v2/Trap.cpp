@@ -7,17 +7,17 @@ Trap::Trap(SpriteInfo & info, sf::Vector2f pos,Settings set) :
 {
 }
 
-void Trap::update()
+void Trap::Update()
 {
-	SpriteObject::update();
+	SpriteObject::Update();
 
 	OldPhysicsPosition = PhysicsPosition;		//zapisanie poprzedniej pozycji
 	PhysicsPosition += Velocity;				//ustawienie nowej pozycji
 }
 
-void Trap::draw(sf::RenderTarget & target)
+void Trap::Draw(sf::RenderTarget & target)
 {
-	SpriteObject::draw(target);
+	SpriteObject::Draw(target);
 
 	RenderPosition = PhysicsPosition;
 }

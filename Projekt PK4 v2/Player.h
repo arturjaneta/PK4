@@ -11,14 +11,14 @@ enum Dir
 class Player :public WorldObject
 {
 public:
-	Player(SpriteInfo& info, sf::Vector2f pos,Settings _set);
-	void update();
-	void death(sf::Vector2f pos);
-	void draw(sf::RenderTarget& target);
-	void handleEvents(sf::Event& event);
+	Player(SpriteInfo& info, sf::Vector2f pos,Settings set);
+	void Update();
+	void Death(sf::Vector2f pos);
+	void Draw(sf::RenderTarget& target);
+	void HandleEvents(sf::Event& event);
 	bool ContactBegin(std::weak_ptr<ICollideable> object, bool fromLeft, bool fromTop);
 private:
-	bool onGround;
+	bool OnGround;
 	enum Dir Direction;		//do animacji
-	Settings set;
+	Settings Set;
 };

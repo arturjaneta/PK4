@@ -13,24 +13,24 @@
 class World
 {
 public:
-	World(std::string path = "Content/Worlds/world0.txt",Settings _set=Settings());
+	World(std::string path = "Content/Worlds/world0.txt",Settings set=Settings());
 	~World() {}
-	void update();
-	void draw(sf::RenderTarget& target);
-	void handleEvents(sf::Event& event);
-	void loadWorld(std::string path);
-	bool GetIfExit() { return ifExit; }
+	void Update();
+	void Draw(sf::RenderTarget& target);
+	void HandleEvents(sf::Event& event);
+	void LoadWorld(std::string path);
+	bool GetIfExit() { return IfExit; }
 private:
-	Settings set;
-	std::shared_ptr<Player> mPlayer;		//inteligetne wskazniki
-	std::shared_ptr<Exit> mExit;
-	std::vector<std::shared_ptr<WorldObject>> mWorldObjects;
-	std::vector<std::weak_ptr<ICollideable>> mCollideables;
-	std::vector<std::shared_ptr<Trap>> mTraps;
-	std::vector<std::shared_ptr<Enemy>> mEnemies;
+	Settings Set;
+	std::shared_ptr<Player> PlayerOne;		//inteligetne wskazniki
+	std::shared_ptr<Exit> Exits;
+	std::vector<std::shared_ptr<WorldObject>> WorldObjects;
+	std::vector<std::weak_ptr<ICollideable>> Collideables;
+	std::vector<std::shared_ptr<Trap>> Traps;
+	std::vector<std::shared_ptr<Enemy>> Enemies;
 
 	sf::Vector2f Gravity;
 	sf::Vector2f RespawnPoint;
-	bool ifExit;
+	bool IfExit;
 };
 

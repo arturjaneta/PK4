@@ -6,30 +6,30 @@ Shift(shift),FirstPosition(pos)
 {
 	Static = false;
 	Velocity = sf::Vector2f(1.5f, 0.f);
-	direction = right;
+	Direction = right;
 }
 
-void Enemy::update()
+void Enemy::Update()
 {
-	SpriteObject::update();
+	SpriteObject::Update();
 	OldPhysicsPosition = PhysicsPosition;		//zapisanie poprzedniej pozycji
 	PhysicsPosition += Velocity;				//ustawienie nowej pozycji
 	if (PhysicsPosition.x<FirstPosition.x - Shift || PhysicsPosition.x > FirstPosition.x + Shift) {
 		PhysicsPosition = OldPhysicsPosition;
 		Velocity.x = -Velocity.x;
-		if (direction == left) {
+		if (Direction == left) {
 			setFrameLoop(0, 0);
-			direction = right;
+			Direction = right;
 		}
 		else {
 			setFrameLoop(1, 1);
-			direction = left;
+			Direction = left;
 		}
 	}											//zmienic teksture
 }
 
-void Enemy::draw(sf::RenderTarget & target)
+void Enemy::Draw(sf::RenderTarget & target)
 {
-	SpriteObject::draw(target);
+	SpriteObject::Draw(target);
 	RenderPosition = PhysicsPosition;
 }

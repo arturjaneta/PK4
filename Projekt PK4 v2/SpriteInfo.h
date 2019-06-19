@@ -5,16 +5,16 @@ struct SpriteInfo
 {
 	SpriteInfo() {}
 	SpriteInfo(std::string path, int frames = 1, int framesPerRow = 1) :
-		mFrames(frames),
-		mFramesPerRow(framesPerRow)
+		Frames(frames),
+		FramesPerRow(framesPerRow)
 	{
-		mTexture.loadFromFile(path);
-		mFrameDim = sf::Vector2f(mTexture.getSize().x / mFramesPerRow, mTexture.getSize().y / (mFrames / mFramesPerRow));
-		mHitBox = sf::FloatRect(0.f, 0.f, mFrameDim.x, mFrameDim.y);
+		Texture.loadFromFile(path);
+		FrameDim = sf::Vector2f(Texture.getSize().x / FramesPerRow, Texture.getSize().y / (Frames / FramesPerRow));
+		HitBox = sf::FloatRect(0.f, 0.f, FrameDim.x, FrameDim.y);
 	}
-	sf::Texture mTexture;
-	int mFrames;
-	int mFramesPerRow;
-	sf::Vector2f mFrameDim;
-	sf::FloatRect mHitBox;
+	sf::Texture Texture;
+	int Frames;
+	int FramesPerRow;
+	sf::Vector2f FrameDim;
+	sf::FloatRect HitBox;
 };

@@ -7,16 +7,16 @@
 
 class Pause
 {
-	int pointer;
+	int PointerPos;
 	int WorldsCount;
-	std::vector<std::shared_ptr<SpriteObject>> mButtons;
-	std::shared_ptr<SpriteObject > mPointer;
-	std::shared_ptr<SpriteObject > mBackground;
-	Settings set;
+	std::vector<std::shared_ptr<SpriteObject>> Buttons;
+	std::shared_ptr<SpriteObject > Pointer;
+	std::shared_ptr<SpriteObject > Background;
+	Settings Set;
 public:
-	Pause(Settings _set=Settings(),int LvlCount = 1);
-	void update();
-	void draw(sf::RenderTarget& target);
-	int handleEvents(sf::Event& event,WorldManager& world);
+	Pause(Settings set=Settings(),int lvlCount = 1);
+	void Update();
+	void Draw(sf::RenderTarget& target);
+	int HandleEvents(sf::Event& event,WorldManager& world);
 };
 

@@ -4,39 +4,39 @@
 
 Settings::Settings(int resx,int resy)
 {
-	resolutionx = resx;
-	resolutiony = resy;
-	scale = resx / 1920.0;
-	xgravity *=scale;
-	ygravity *= scale;
-	playerSpeed *= scale;
+	ResolutionX = resx;
+	ResolutionY = resy;
+	Scale = resx / 1920.0;
+	XGravity *=Scale;
+	YGravity *= Scale;
+	PlayerSpeed *= Scale;
 }
 
 int Settings::getResolutionX()
 {
-	return resolutionx;
+	return ResolutionX;
 }
 int Settings::getResolutionY()
 {
-	return resolutiony;
+	return ResolutionY;
 }
 
 float Settings::getXgravity()
 {
-	return xgravity;
+	return XGravity;
 }
 
 float Settings::getYgravity()
 {
-	return ygravity;
+	return YGravity;
 }
 
 float Settings::getPlayerSpeed()
 {
-	return playerSpeed;
+	return PlayerSpeed;
 }
 
 double Settings::getScale()
 {
-	return scale;
+	return Scale;
 }

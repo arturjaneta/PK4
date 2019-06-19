@@ -9,30 +9,30 @@
 class SpriteObject : public IRenderable
 {
 public:
-	SpriteObject(SpriteInfo& info, sf::Vector2f pos,Settings _set);
+	SpriteObject(SpriteInfo& info, sf::Vector2f pos,Settings set);
 	virtual ~SpriteObject() {}
 
-	virtual void update();
-	virtual void draw(sf::RenderTarget& target);
+	virtual void Update();
+	virtual void Draw(sf::RenderTarget& target);
 	// Setters
 	virtual void setPosition(sf::Vector2f pos) { RenderPosition = pos; }
 	void setFrameLoop(int start, int stop, bool loop = true);
 	// Getters
-	SpriteInfo getSpriteInfo() { return _SpriteInfo; }
+	SpriteInfo getSpriteInfo() { return SpriteInf; }
 	sf::Sprite& getSprite() { return Sprite; }
 	sf::Vector2f getRenderPosition() { return RenderPosition; }
 
 protected:
-	SpriteInfo& _SpriteInfo;
+	SpriteInfo& SpriteInf;
 	sf::Sprite Sprite;
 	sf::Vector2f RenderPosition;
 
 	int CurrentFrame;
 	sf::Clock Clock;
 	float FrameDelay;
-	bool mLoopAnim;
-	int mStartFrame;
-	int mEndFrame;
-	int mFrameDir;
-	Settings set;
+	bool LoopAnim;
+	int StartFrame;
+	int EndFrame;
+	int FrameDir;
+	Settings Set;
 };

@@ -5,11 +5,11 @@
 class WorldObject : public SpriteObject , public ICollideable
 {
 public:
-	WorldObject(SpriteInfo& info, sf::Vector2f pos,Settings _set);
+	WorldObject(SpriteInfo& info, sf::Vector2f pos,Settings set);
 	~WorldObject() {}
 
-	void update();
-	void draw(sf::RenderTarget& target);
+	void Update();
+	void Draw(sf::RenderTarget& target);
 
 private:
 };

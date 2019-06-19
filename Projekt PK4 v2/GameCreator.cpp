@@ -3,50 +3,50 @@
 
 GameCreator::GameCreator(int resx,int resy)
 {
-	set = Settings(resx,resy);
-	world = WorldManager(set);
-	window = std::make_shared<sf::RenderWindow>(sf::VideoMode(resx, resy), "Platformowka 2D", sf::Style::Fullscreen);
-	window->setFramerateLimit(60);
-	Assets::loadAssets();
-	pScreen = Pause(set,world.GetWorldsCount());
-	world.SetWorld(0);
+	Set = Settings(resx,resy);
+	World = WorldManager(Set);
+	Window = std::make_shared<sf::RenderWindow>(sf::VideoMode(resx, resy), "Platformowka 2D", sf::Style::Fullscreen);
+	Window->setFramerateLimit(60);
+	Assets::LoadAssets();
+	PauseScreen = Pause(Set,World.getWorldsCount());
+	World.setWorld(0);
 }
 
 void GameCreator::RunGameLoop()
 {
-	while (window->isOpen())
+	while (Window->isOpen())
 	{
 			sf::Event event;
-			while (window->pollEvent(event))
+			while (Window->pollEvent(event))
 			{
 				if (event.type == sf::Event::Closed)
-					window->close();
+					Window->close();
 				if (event.type == sf::Event::KeyPressed&&event.key.code == sf::Keyboard::Escape) {
-					if (pause == 0) {
-						pause = 1;
+					if (Paused == 0) {
+						Paused = 1;
 					}
 					else {
-						pause = 0;
+						Paused = 0;
 					}
 				}
-				if (pause != 1)
-					world.GetActualWorld()->handleEvents(event);
+				if (Paused != 1)
+					World.getActualWorld()->HandleEvents(event);
 				else
-					pause = pScreen.handleEvents(event, world);
-				if (pause == 2)		//exit
-					window->close();
+					Paused = PauseScreen.HandleEvents(event, World);
+				if (Paused == 2)		//exit
+					Window->close();
 			}
-			if (pause != 1)
-				world.GetActualWorld()->update();
-		window->clear();
-		world.GetActualWorld()->draw(*window);
-		if (pause == 1) {
-			pScreen.update();
-			pScreen.draw(*window);
+			if (Paused != 1)
+				World.getActualWorld()->Update();
+		Window->clear();
+		World.getActualWorld()->Draw(*Window);
+		if (Paused == 1) {
+			PauseScreen.Update();
+			PauseScreen.Draw(*Window);
 		}
-		window->display();
-		if (world.GetActualWorld()->GetIfExit()) {
-			world.SetNextWorld();
+		Window->display();
+		if (World.getActualWorld()->GetIfExit()) {
+			World.setNextWorld();
 		}
 	}
 }

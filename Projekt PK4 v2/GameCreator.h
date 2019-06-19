@@ -11,11 +11,11 @@
 
 class GameCreator
 {
-	std::shared_ptr<sf::RenderWindow> window;
-	WorldManager world;
-	Pause pScreen;
-	Settings set;
-	int pause = 0;
+	std::shared_ptr<sf::RenderWindow> Window;
+	WorldManager World;
+	Pause PauseScreen;
+	Settings Set;
+	int Paused = 0;
 public:
 	GameCreator(int resx=1920,int resy=1080);
 	void RunGameLoop();

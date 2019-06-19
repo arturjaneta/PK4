@@ -2,12 +2,12 @@
 
 class Settings
 {
-	int resolutionx;
-	int resolutiony;
-	float xgravity= 0.f;
-	float ygravity= 5.5;
-	float playerSpeed = 2.5;
-	double scale;
+	int ResolutionX;
+	int ResolutionY;
+	float XGravity= 0.f;
+	float YGravity= 5.5;
+	float PlayerSpeed = 2.5;
+	double Scale;
 public:
 	Settings(int resx=1920,int resy=1080);
 	int getResolutionX();

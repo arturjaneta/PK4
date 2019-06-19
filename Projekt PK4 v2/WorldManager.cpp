@@ -2,13 +2,13 @@
 #include <string>
 #include <fstream>
 
-void WorldManager::SetWorld(int World_nb)
+void WorldManager::setWorld(int World_nb)
 {
 	std::string path, path_1, path_2;
 	path_1 = "Content/Worlds/world";
 	path_2 = ".txt";
 	if (World_nb > WorldsCount - 1) {
-		ActualWorld = std::make_shared<World>("Content/Worlds/world0.txt",set);	//od poczatku
+		ActualWorld = std::make_shared<World>("Content/Worlds/world0.txt",Set);	//od poczatku
 		ActualWorldNb = 0;
 		return;
 	}
@@ -16,14 +16,14 @@ void WorldManager::SetWorld(int World_nb)
 		return;
 	}
 	path = path_1 + std::to_string(World_nb) + path_2;
-	ActualWorld = std::make_shared<World>(path,set);
+	ActualWorld = std::make_shared<World>(path,Set);
 	ActualWorldNb = World_nb;
 }
 
 
 WorldManager::WorldManager(Settings _set):ActualWorldNb(0)
 {
-	set = _set;
+	Set = _set;
 	int i = 0;
 	std::fstream file;
 	do {
@@ -35,14 +35,14 @@ WorldManager::WorldManager(Settings _set):ActualWorldNb(0)
 		i++;
 	} while (file.good());
 	WorldsCount = i;
-	SetWorld(0);//zaczynamy od 1 swiata
+	setWorld(0);//zaczynamy od 1 swiata
 }
 
 
 
-void WorldManager::SetNextWorld()
+void WorldManager::setNextWorld()
 {
-	SetWorld(ActualWorldNb + 1);
+	setWorld(ActualWorldNb + 1);
 }
 
 

@@ -3,19 +3,19 @@
 Player::Player(SpriteInfo& info, sf::Vector2f pos,Settings _set) :
 	WorldObject(info, pos,_set)
 {
-	set = _set;
+	Set = _set;
 	Static = false;
-	onGround = false;
+	OnGround = false;
 }
 
-void Player::update()
+void Player::Update()
 {
-	SpriteObject::update();
+	SpriteObject::Update();
 
 	OldPhysicsPosition = PhysicsPosition;		//zapisanie poprzedniej pozycji
 	PhysicsPosition += Velocity;				//ustawienie nowej pozycji
 	//animacje
-	if (onGround) {
+	if (OnGround) {
 		if (Direction == left)
 			setFrameLoop(16, 23);		//pozycja w tablicy tekstur
 		else if(Direction == right)
@@ -38,35 +38,35 @@ void Player::update()
 
 }
 
-void Player::death(sf::Vector2f pos)
+void Player::Death(sf::Vector2f pos)
 {
 	setPhysicsPosition(pos);
 	setVelocity(sf::Vector2f(0,0));
 }
 
 
-void Player::draw(sf::RenderTarget& target)
+void Player::Draw(sf::RenderTarget& target)
 {
-	SpriteObject::draw(target);
+	SpriteObject::Draw(target);
 
 	RenderPosition = PhysicsPosition;			//taka sama fizyczna pozycja i widoczna
 }
 
-void Player::handleEvents(sf::Event& event)							//poruszanie sie
+void Player::HandleEvents(sf::Event& event)							//poruszanie sie
 {
 	if (event.type == sf::Event::KeyPressed)					
 	{
-		if (event.key.code == sf::Keyboard::Space && onGround) {
-			Velocity.y = -(set.getPlayerSpeed())*2;
-			onGround = false;
+		if (event.key.code == sf::Keyboard::Space && OnGround) {
+			Velocity.y = -(Set.getPlayerSpeed())*2;
+			OnGround = false;
 		}
 
 		if (event.key.code == sf::Keyboard::A) {
-			Velocity.x = -set.getPlayerSpeed();
+			Velocity.x = -Set.getPlayerSpeed();
 			Direction = left;
 		}
 		else if (event.key.code == sf::Keyboard::D) {
-			Velocity.x = set.getPlayerSpeed();
+			Velocity.x = Set.getPlayerSpeed();
 			Direction = right;
 		}
 	}
@@ -86,7 +86,7 @@ void Player::handleEvents(sf::Event& event)							//poruszanie sie
 bool Player::ContactBegin(std::weak_ptr<ICollideable> object, bool fromLeft, bool fromTop)
 {
 	if (object.lock()->isStatic()&&fromTop&&Velocity.y<0.2)
-		onGround = true;
+		OnGround = true;
 
 	return true;
 }

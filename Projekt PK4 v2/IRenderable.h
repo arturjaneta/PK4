@@ -6,6 +6,6 @@ class IRenderable
 public:
 	IRenderable() {}
 
-	virtual void update() = 0;
-	virtual void draw(sf::RenderTarget& target) = 0;
+	virtual void Update() = 0;
+	virtual void Draw(sf::RenderTarget& target) = 0;
 };

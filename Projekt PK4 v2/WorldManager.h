@@ -6,14 +6,14 @@ class WorldManager
 	int ActualWorldNb;
 	int WorldsCount;
 	std::shared_ptr<World> ActualWorld;
-	Settings set;
+	Settings Set;
 public:
 	WorldManager() {};
 	WorldManager(Settings set);
-	void SetWorld(int World_nb);
-	void SetNextWorld();
-	int GetWorldsCount() { return WorldsCount; }
-	int GetActualWorldNb() { return ActualWorldNb; }
-	std::shared_ptr<World> GetActualWorld() { return ActualWorld; }
+	void setWorld(int World_nb);
+	void setNextWorld();
+	int getWorldsCount() { return WorldsCount; }
+	int getActualWorldNb() { return ActualWorldNb; }
+	std::shared_ptr<World> getActualWorld() { return ActualWorld; }
 };
 

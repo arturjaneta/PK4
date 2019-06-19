@@ -4,13 +4,12 @@
 
 class Enemy:public WorldObject
 {
-	enum Dir direction;
+	enum Dir Direction;
 	int Shift;
 	sf::Vector2f FirstPosition;
-
 public:	
 	Enemy(SpriteInfo& info, sf::Vector2f pos, int shift,Settings set);
-	void update();
-	void draw(sf::RenderTarget& target);
+	void Update();
+	void Draw(sf::RenderTarget& target);
 };
 

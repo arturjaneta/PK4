@@ -4,43 +4,43 @@
 #include "Assets.h"
 #include "CollisionHandler.h"
 
-World::World(std::string path, Settings _set):ifExit(false)
+World::World(std::string path, Settings _set):IfExit(false)
 {
-	set = _set;
-	loadWorld(path);
-	mPlayer = std::make_shared<Player>(Assets::sprites["player"], RespawnPoint,set);
-	mCollideables.push_back(mPlayer);
-	Gravity = sf::Vector2f(set.getXgravity(), set.getYgravity());
+	Set = _set;
+	LoadWorld(path);
+	PlayerOne = std::make_shared<Player>(Assets::Sprites["player"], RespawnPoint,Set);
+	Collideables.push_back(PlayerOne);
+	Gravity = sf::Vector2f(Set.getXgravity(), Set.getYgravity());
 }
 
 
-void World::update()
+void World::Update()
 {
 	//sprawdzenie czy na mapie
-	sf::FloatRect tmp = mPlayer->getHitBox();
-	tmp.left += mPlayer->getPhysicsPosition().x;
-	tmp.top += mPlayer->getPhysicsPosition().y;
+	sf::FloatRect tmp = PlayerOne->getHitBox();
+	tmp.left += PlayerOne->getPhysicsPosition().x;
+	tmp.top += PlayerOne->getPhysicsPosition().y;
 
-	if (!tmp.intersects(sf::FloatRect(0.f, 0.f, set.getResolutionX(), set.getResolutionY())))
-		mPlayer->death(RespawnPoint);
+	if (!tmp.intersects(sf::FloatRect(0.f, 0.f, Set.getResolutionX(), Set.getResolutionY())))
+		PlayerOne->Death(RespawnPoint);
 	//grawitacja
-	mPlayer->update();
-	mPlayer->setVelocity(mPlayer->getVelocity() + Gravity * 0.0166f);
-	mExit->update();
-	for (auto& obj : mWorldObjects) {
-		obj->update();
+	PlayerOne->Update();
+	PlayerOne->setVelocity(PlayerOne->getVelocity() + Gravity * 0.0166f);
+	Exits->Update();
+	for (auto& obj : WorldObjects) {
+		obj->Update();
 		if (!obj->isStatic()) {
 			obj->setVelocity(obj->getVelocity() + Gravity * 0.0166f);
 		}
 	}
-	for (auto& obj : mTraps) {
-		obj->update();
+	for (auto& obj : Traps) {
+		obj->Update();
 		if (!obj->isStatic()) {
 			obj->setVelocity(obj->getVelocity() + Gravity * 0.0166f);
 		}
 	}
-	for (auto& obj : mEnemies) {
-		obj->update();
+	for (auto& obj : Enemies) {
+		obj->Update();
 		if (!obj->isStatic()) {
 			obj->setVelocity(obj->getVelocity() + Gravity * 0.0166f);
 		}
@@ -48,27 +48,27 @@ void World::update()
 
 	// check collisions
 	CollisionHandler CollisionHandler;
-	CollisionHandler.CollisionChecker(mCollideables, mPlayer, RespawnPoint, ifExit);
+	CollisionHandler.CollisionChecker(Collideables, PlayerOne, RespawnPoint, IfExit);
 }
 
-void World::draw(sf::RenderTarget& target)
+void World::Draw(sf::RenderTarget& target)
 {
-	for (auto& obj : mWorldObjects)
-		obj->draw(target);
-	for (auto& obj : mTraps)
-		obj->draw(target);
-	for (auto& obj : mEnemies)
-		obj->draw(target);
-	mExit->draw(target);
-	mPlayer->draw(target);
+	for (auto& obj : WorldObjects)
+		obj->Draw(target);
+	for (auto& obj : Traps)
+		obj->Draw(target);
+	for (auto& obj : Enemies)
+		obj->Draw(target);
+	Exits->Draw(target);
+	PlayerOne->Draw(target);
 }
 
-void World::handleEvents(sf::Event& event)
+void World::HandleEvents(sf::Event& event)
 {
-	mPlayer->handleEvents(event);
+	PlayerOne->HandleEvents(event);
 }
 
-void World::loadWorld(std::string path)
+void World::LoadWorld(std::string path)
 {
 	std::ifstream file(path);
 
@@ -80,43 +80,43 @@ void World::loadWorld(std::string path)
 		char z;
 		//respawn
 		file >> x >> y;
-		x *= set.getScale();
-		y *= set.getScale();
-		RespawnPoint = sf::Vector2f(x*set.getScale(), y*set.getScale());
+		x *= Set.getScale();
+		y *= Set.getScale();
+		RespawnPoint = sf::Vector2f(x*Set.getScale(), y*Set.getScale());
 		file >> x >> y;
-		x *= set.getScale();
-		y *= set.getScale();
-		auto newObj = std::make_shared<Exit>(Assets::sprites["exit"], sf::Vector2f(x, y),set);
-		mExit = newObj;
-		mCollideables.push_back(newObj);
+		x *= Set.getScale();
+		y *= Set.getScale();
+		auto newObj = std::make_shared<Exit>(Assets::Sprites["exit"], sf::Vector2f(x, y),Set);
+		Exits = newObj;
+		Collideables.push_back(newObj);
 		while (!file.eof())
 		{
 			file >> id >> x >> y >> z;
-			x *= set.getScale();
-			y *= set.getScale();
+			x *= Set.getScale();
+			y *= Set.getScale();
 			if (z == 'n') {
-				auto newObj = std::make_shared<WorldObject>(Assets::sprites[id], sf::Vector2f(x, y), set);
-				mWorldObjects.push_back(newObj);
+				auto newObj = std::make_shared<WorldObject>(Assets::Sprites[id], sf::Vector2f(x, y), Set);
+				WorldObjects.push_back(newObj);
 			}
 			else if (z == 't') {
-				auto newObj = std::make_shared<Trap>(Assets::sprites[id], sf::Vector2f(x, y), set);
-				mTraps.push_back(newObj);
-				mCollideables.push_back(newObj);
+				auto newObj = std::make_shared<Trap>(Assets::Sprites[id], sf::Vector2f(x, y), Set);
+				Traps.push_back(newObj);
+				Collideables.push_back(newObj);
 			}
 			else if (z == 'e') {
 				int tmp;
 				file >> tmp;
-				auto newObj = std::make_shared<Enemy>(Assets::sprites[id], sf::Vector2f(x, y), tmp*set.getScale(), set);
-				mEnemies.push_back(newObj);
-				mCollideables.push_back(newObj);
+				auto newObj = std::make_shared<Enemy>(Assets::Sprites[id], sf::Vector2f(x, y), tmp*Set.getScale(), Set);
+				Enemies.push_back(newObj);
+				Collideables.push_back(newObj);
 			}
 			else {
-				auto newObj = std::make_shared<WorldObject>(Assets::sprites[id], sf::Vector2f(x, y), set);
-				mWorldObjects.push_back(newObj);
-				mCollideables.push_back(newObj);
+				auto newObj = std::make_shared<WorldObject>(Assets::Sprites[id], sf::Vector2f(x, y), Set);
+				WorldObjects.push_back(newObj);
+				Collideables.push_back(newObj);
 			}
 		}
-		mWorldObjects.pop_back();
-		mCollideables.pop_back();
+		WorldObjects.pop_back();
+		Collideables.pop_back();
 	}
 }

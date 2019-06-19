@@ -3,63 +3,63 @@
 
 
 SpriteObject::SpriteObject(SpriteInfo& info, sf::Vector2f pos,Settings _set) : IRenderable(),
-_SpriteInfo(info),
-CurrentFrame(0),FrameDelay(100.f), mLoopAnim(true), mStartFrame(0), mEndFrame(0), mFrameDir(1)
+SpriteInf(info),
+CurrentFrame(0),FrameDelay(100.f), LoopAnim(true), StartFrame(0), EndFrame(0), FrameDir(1)
 {
-	set = _set;
-	Sprite = sf::Sprite(info.mTexture);
-	Sprite.setScale(set.getScale(), set.getScale());
+	Set = _set;
+	Sprite = sf::Sprite(info.Texture);
+	Sprite.setScale(Set.getScale(), Set.getScale());
 	RenderPosition = pos;
 }
 
 
-void SpriteObject::update()
+void SpriteObject::Update()
 {
 	Sprite.setPosition(RenderPosition);
 }
 
-void SpriteObject::draw(sf::RenderTarget& target)
+void SpriteObject::Draw(sf::RenderTarget& target)
 {
 	if (Clock.getElapsedTime().asMilliseconds() >= FrameDelay &&
-		(mLoopAnim || (mFrameDir == 1 && CurrentFrame != mEndFrame) || (mFrameDir == -1 && CurrentFrame != mStartFrame)))
+		(LoopAnim || (FrameDir == 1 && CurrentFrame != EndFrame) || (FrameDir == -1 && CurrentFrame != StartFrame)))
 	{
 		Clock.restart();
-		CurrentFrame += mFrameDir;
+		CurrentFrame += FrameDir;
 
-		if (CurrentFrame > mEndFrame && mFrameDir == 1 && mLoopAnim)
-			CurrentFrame = mStartFrame;
-		else if (CurrentFrame < mStartFrame && mFrameDir == -1 && mLoopAnim)
-			CurrentFrame = mEndFrame;
+		if (CurrentFrame > EndFrame && FrameDir == 1 && LoopAnim)
+			CurrentFrame = StartFrame;
+		else if (CurrentFrame < StartFrame && FrameDir == -1 && LoopAnim)
+			CurrentFrame = EndFrame;
 	}
 
 	// pozycja klatki
-	int frameX = (CurrentFrame%_SpriteInfo.mFramesPerRow)*_SpriteInfo.mFrameDim.x;
-	int frameY = (CurrentFrame / _SpriteInfo.mFramesPerRow)*_SpriteInfo.mFrameDim.y;
+	int frameX = (CurrentFrame%SpriteInf.FramesPerRow)*SpriteInf.FrameDim.x;
+	int frameY = (CurrentFrame / SpriteInf.FramesPerRow)*SpriteInf.FrameDim.y;
 
-	Sprite.setTextureRect(sf::IntRect(frameX, frameY, _SpriteInfo.mFrameDim.x, _SpriteInfo.mFrameDim.y));
+	Sprite.setTextureRect(sf::IntRect(frameX, frameY, SpriteInf.FrameDim.x, SpriteInf.FrameDim.y));
 
 	target.draw(Sprite); 
 }
 
 void SpriteObject::setFrameLoop(int start, int stop, bool loop)
 {
-	mLoopAnim = loop;
+	LoopAnim = loop;
 
-	if (start == mStartFrame && stop == mEndFrame)
+	if (start == StartFrame && stop == EndFrame)
 		return;
 
 	if (start <= stop)
 	{
-		mStartFrame = start;
-		mEndFrame = stop;
+		StartFrame = start;
+		EndFrame = stop;
 		CurrentFrame = start;
-		mFrameDir = 1;
+		FrameDir = 1;
 	}
 	else
 	{
-		mStartFrame = stop;
-		mEndFrame = start;
+		StartFrame = stop;
+		EndFrame = start;
 		CurrentFrame = start;
-		mFrameDir = -1;
+		FrameDir = -1;
 	}
 }

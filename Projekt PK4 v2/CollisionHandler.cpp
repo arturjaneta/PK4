@@ -52,7 +52,7 @@ bool special_collision_handler(std::weak_ptr<ICollideable> a, std::weak_ptr<ICol
 	auto tmp = b.lock();
 	auto tmp1 = a.lock();
 	if (a.lock() == mPlayer && typeid(*tmp).name() == typeid(Trap).name()) {					//RTTI
-		mPlayer->death(RespawnPoint);
+		mPlayer->Death(RespawnPoint);
 		return true;
 	}
 	else if (a.lock() == mPlayer && typeid(*tmp).name() == typeid(Exit).name()) {
@@ -66,7 +66,7 @@ bool special_collision_handler(std::weak_ptr<ICollideable> a, std::weak_ptr<ICol
 			return true;
 		}
 		else {
-			mPlayer->death(RespawnPoint);
+			mPlayer->Death(RespawnPoint);
 			return true;
 		}
 	}
@@ -79,7 +79,7 @@ bool special_collision_handler(std::weak_ptr<ICollideable> a, std::weak_ptr<ICol
 			return true;
 		}
 		else {
-			mPlayer->death(RespawnPoint);
+			mPlayer->Death(RespawnPoint);
 			return true;
 		}
 	}
@@ -87,7 +87,7 @@ bool special_collision_handler(std::weak_ptr<ICollideable> a, std::weak_ptr<ICol
 }
 
 
-void CollisionHandler::resolveCollision(std::weak_ptr<ICollideable> a, std::weak_ptr<ICollideable> b, std::shared_ptr<Player> mPlayer, sf::Vector2f &RespawnPoint, bool &ifExit)
+void CollisionHandler::ResolveCollision(std::weak_ptr<ICollideable> a, std::weak_ptr<ICollideable> b, std::shared_ptr<Player> mPlayer, sf::Vector2f &RespawnPoint, bool &ifExit)
 {
 	bool fromLeft,fromTop;
 	float minOverlapX, minOverlapY;
@@ -110,7 +110,7 @@ void CollisionHandler::resolveCollision(std::weak_ptr<ICollideable> a, std::weak
 	b.lock()->ContactEnd(a);
 }
 
-bool CollisionHandler::checkCollision(std::weak_ptr<ICollideable> a, std::weak_ptr<ICollideable> b)
+bool CollisionHandler::CheckCollision(std::weak_ptr<ICollideable> a, std::weak_ptr<ICollideable> b)
 {
 	sf::Vector2f a1 = a.lock()->getPhysicsPosition() + sf::Vector2f(a.lock()->getHitBox().left, a.lock()->getHitBox().top);
 	sf::Vector2f a2 = sf::Vector2f(a.lock()->getHitBox().width, a.lock()->getHitBox().height);
@@ -145,8 +145,8 @@ void CollisionHandler::CollisionChecker(std::vector<std::weak_ptr<ICollideable>>
 			else if (mCollideables[y].lock()->isStatic())
 				_static = mCollideables[y];
 
-			if (checkCollision(dynamic, _static) && dynamic.lock()->isCollisionActive() && _static.lock()->isCollisionActive() && dynamic.lock() != _static.lock())
-				resolveCollision(dynamic, _static,mPlayer,RespawnPoint,ifExit);
+			if (CheckCollision(dynamic, _static) && dynamic.lock()->isCollisionActive() && _static.lock()->isCollisionActive() && dynamic.lock() != _static.lock())
+				ResolveCollision(dynamic, _static,mPlayer,RespawnPoint,ifExit);
 		}
 	}
 }
