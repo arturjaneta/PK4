@@ -7,7 +7,7 @@ GameCreator::GameCreator(int resx,int resy)
 	World = WorldManager(Set);
 	Window = std::make_shared<sf::RenderWindow>(sf::VideoMode(resx, resy), "Platformowka 2D", sf::Style::Fullscreen);
 	Window->setFramerateLimit(Set.getFrameRate());
-	Assets::LoadAssets();
+	Assets::LoadAssets("Content/Textures/textureinfo.txt");
 	PauseScreen = Pause(Set,World.getWorldsCount());
 	World.setWorld(0);	//od pierwszego swiata
 }

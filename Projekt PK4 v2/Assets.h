@@ -4,6 +4,6 @@
 
 struct Assets
 {
-	static void LoadAssets();
+	static void LoadAssets(std::string path);
 	static std::map<std::string, SpriteInfo> Sprites;
 };

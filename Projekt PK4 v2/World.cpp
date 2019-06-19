@@ -4,9 +4,9 @@
 #include "Assets.h"
 #include "CollisionHandler.h"
 
-World::World(std::string path, Settings _set):IfExit(false)
+World::World(std::string path, Settings set):IfExit(false)
 {
-	Set = _set;
+	Set = set;
 	LoadWorld(path);
 	PlayerOne = std::make_shared<Player>(Assets::Sprites["player"], RespawnPoint,Set);
 	Collideables.push_back(PlayerOne);
