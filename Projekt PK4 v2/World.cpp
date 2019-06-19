@@ -25,24 +25,24 @@ void World::Update()
 		PlayerOne->Death(RespawnPoint);
 	//grawitacja
 	PlayerOne->Update();
-	PlayerOne->setVelocity(PlayerOne->getVelocity() + Gravity * 0.0166f);
+	PlayerOne->setVelocity(PlayerOne->getVelocity() + Gravity);
 	Exits->Update();
 	for (auto& obj : WorldObjects) {
 		obj->Update();
 		if (!obj->isStatic()) {
-			obj->setVelocity(obj->getVelocity() + Gravity * 0.0166f);
+			obj->setVelocity(obj->getVelocity() + Gravity);
 		}
 	}
 	for (auto& obj : Traps) {
 		obj->Update();
 		if (!obj->isStatic()) {
-			obj->setVelocity(obj->getVelocity() + Gravity * 0.0166f);
+			obj->setVelocity(obj->getVelocity() + Gravity);
 		}
 	}
 	for (auto& obj : Enemies) {
 		obj->Update();
 		if (!obj->isStatic()) {
-			obj->setVelocity(obj->getVelocity() + Gravity * 0.0166f);
+			obj->setVelocity(obj->getVelocity() + Gravity);
 		}
 	}
 

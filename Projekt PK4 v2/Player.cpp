@@ -1,9 +1,9 @@
 #include "Player.h"
 
-Player::Player(SpriteInfo& info, sf::Vector2f pos,Settings _set) :
-	WorldObject(info, pos,_set)
+Player::Player(SpriteInfo& info, sf::Vector2f pos,Settings set) :
+	WorldObject(info, pos,set)
 {
-	Set = _set;
+	Set = set;
 	Static = false;
 	OnGround = false;
 }

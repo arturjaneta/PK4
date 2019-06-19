@@ -15,7 +15,6 @@ public:
 	}
 
 	virtual bool ContactBegin(std::weak_ptr<ICollideable> object, bool fromLeft, bool fromTop) { return true; }
-	virtual void ContactEnd(std::weak_ptr<ICollideable> object) {}
 
 	// Setters
 	void setHitBox(sf::FloatRect hitbox) { HitBox = hitbox; }

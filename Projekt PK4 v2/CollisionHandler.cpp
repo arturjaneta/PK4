@@ -106,8 +106,6 @@ void CollisionHandler::ResolveCollision(std::weak_ptr<ICollideable> a, std::weak
 			x_collision(minOverlapX, fromLeft, a);
 		}
 	}
-	a.lock()->ContactEnd(b);
-	b.lock()->ContactEnd(a);
 }
 
 bool CollisionHandler::CheckCollision(std::weak_ptr<ICollideable> a, std::weak_ptr<ICollideable> b)
@@ -132,21 +130,21 @@ void CollisionHandler::CollisionChecker(std::vector<std::weak_ptr<ICollideable>>
 	{
 		for (std::size_t y = x + 1; y < mCollideables.size(); y++)
 		{
-			auto dynamic = mCollideables[x];
+			auto _dynamic = mCollideables[x];
 			auto _static = mCollideables[y];
 
 			if (!mCollideables[x].lock()->isStatic())
-				dynamic = mCollideables[x];
+				_dynamic = mCollideables[x];
 			else if (!mCollideables[y].lock()->isStatic())
-				dynamic = mCollideables[y];
+				_dynamic = mCollideables[y];
 
 			if (mCollideables[x].lock()->isStatic())
 				_static = mCollideables[x];
 			else if (mCollideables[y].lock()->isStatic())
 				_static = mCollideables[y];
 
-			if (CheckCollision(dynamic, _static) && dynamic.lock()->isCollisionActive() && _static.lock()->isCollisionActive() && dynamic.lock() != _static.lock())
-				ResolveCollision(dynamic, _static,mPlayer,RespawnPoint,ifExit);
+			if (CheckCollision(_dynamic, _static) && _dynamic.lock()->isCollisionActive() && _static.lock()->isCollisionActive() && _dynamic.lock() != _static.lock())
+				ResolveCollision(_dynamic, _static,mPlayer,RespawnPoint,ifExit);
 		}
 	}
 }

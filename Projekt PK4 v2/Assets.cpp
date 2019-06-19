@@ -4,6 +4,19 @@ std::map<std::string, SpriteInfo> Assets::Sprites;				//mapa zawierajaca nazwy o
 
 void Assets::LoadAssets()
 {
+
+
+
+
+
+
+
+
+
+
+
+
+
 	Sprites["background"] = SpriteInfo("Content/Textures/background.png");
 	Sprites["background2"] = SpriteInfo("Content/Textures/background2.png");
 	Sprites["exit"] = SpriteInfo("Content/Textures/exit.png");

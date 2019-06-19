@@ -1,19 +1,27 @@
 #include "Pause.h"
 #include "Settings.h"
 #include <iostream>
+#define BigButtonsXpos 660*Set.getScale()
+#define BigButtonsYspace 152*Set.getScale()
+#define SmallButtonsXpos 580*Set.getScale()
+#define SmallButtonsYpos 80*Set.getScale()
+#define SmallButtonsXspace 180*Set.getScale()
+#define SmallButtonsYspace 320*Set.getScale()
+#define PointerLeftSpace 560*Set.getScale()
+#define DownSpace 4*Set.getScale()
+#define TextSize 40*Set.getScale()
 
-Pause::Pause(Settings _set,int LvlCount):PointerPos(0),Set(_set)
+Pause::Pause(Settings set,int LvlCount):PointerPos(0),Set(set)
 {
 	WorldsCount = LvlCount;
 	Background=std::make_shared<SpriteObject>(Assets::Sprites["pause"], sf::Vector2f(0, 0), Set);
-	Buttons.push_back(std::make_shared<SpriteObject>(Assets::Sprites["buttonbig2"], sf::Vector2f((Set.getResolutionX() - Assets::Sprites["buttonbig2"].FrameDim.x)/2, 0), Set));
-	Buttons.push_back(std::make_shared<SpriteObject>(Assets::Sprites["buttonbig1"], sf::Vector2f((Set.getResolutionX() - Assets::Sprites["buttonbig2"].FrameDim.x) / 2, Assets::Sprites["buttonbig2"].FrameDim.y+12), Set));
-	Pointer = std::make_shared<SpriteObject>(Assets::Sprites["pointer"], sf::Vector2f(Buttons[0]->getRenderPosition().x- (Assets::Sprites["pointer"].FrameDim.x+12), 0), Set);
-	for (int i = 0; i < 3; i++) {
-		for (int j = 0; Assets::Sprites["buttonsmall"].FrameDim.x +j* (Assets::Sprites["buttonsmall"].FrameDim.y+4) < Set.getResolutionY(); j++) {
+	Buttons.push_back(std::make_shared<SpriteObject>(Assets::Sprites["buttonbig2"], sf::Vector2f(BigButtonsXpos, 0), Set));
+	Buttons.push_back(std::make_shared<SpriteObject>(Assets::Sprites["buttonbig1"], sf::Vector2f(BigButtonsXpos, BigButtonsYspace), Set));
+	Pointer = std::make_shared<SpriteObject>(Assets::Sprites["pointer"], sf::Vector2f(PointerLeftSpace, 0), Set);
+	for (int i = 0; i < 3; i++) {		//3 rzedy
+		for (int j = 0; Assets::Sprites["buttonsmall"].FrameDim.x +j* (Assets::Sprites["buttonsmall"].FrameDim.y+ DownSpace) < Set.getResolutionY(); j++) {
 			if (LvlCount > 0) {
-				auto newObj = std::make_shared<SpriteObject>(Assets::Sprites["buttonsmall"], sf::Vector2f(i * Assets::Sprites["buttonsmall"].FrameDim.x +(i+1)*(Set.getResolutionX() -3* Assets::Sprites["buttonsmall"].FrameDim.x)/4, 
-					2*(Assets::Sprites["buttonbig2"].FrameDim.y + 12)+40+ j * (Assets::Sprites["buttonsmall"].FrameDim.y + 4)), Set);
+				auto newObj = std::make_shared<SpriteObject>(Assets::Sprites["buttonsmall"], sf::Vector2f(SmallButtonsXspace + i * SmallButtonsXpos, SmallButtonsYspace + j * SmallButtonsYpos),Set);
 				Buttons.push_back(newObj);
 			}
 			LvlCount--;
@@ -41,17 +49,17 @@ void Pause::Draw(sf::RenderTarget & target)
 		std::cout << "Font error\n";
 	}
 	text.setFont(font);
-	text.setCharacterSize(40);
+	text.setCharacterSize(TextSize);
 	text.setStyle(sf::Text::Bold);
 	text.setFillColor(sf::Color::White);
 	text.setOutlineColor(sf::Color::Black);
 	text.setOutlineThickness(2);
 	int tmp = 0;
 	for (int i = 0; i < 3; i++) {
-		for (int j = 0; j <9 ; j++) {
+		for (int j = 0; Assets::Sprites["buttonsmall"].FrameDim.x + j * (Assets::Sprites["buttonsmall"].FrameDim.y + DownSpace) < Set.getResolutionY(); j++) {
 			if (tmp < WorldsCount) {
 				text.setString(std::to_string(tmp + 1));
-				text.setPosition(sf::Vector2f(255+ i * Assets::Sprites["buttonsmall"].FrameDim.x + (i + 1)*(Set.getResolutionX() - 3* Assets::Sprites["buttonsmall"].FrameDim.x) / 4, 2 * (Assets::Sprites["buttonbig2"].FrameDim.y + 12) + 50 + j * (Assets::Sprites["buttonsmall"].FrameDim.y + 4)));
+				text.setPosition(sf::Vector2f(SmallButtonsXspace*2 + i * Assets::Sprites["buttonsmall"].FrameDim.x + (i + 1)*(Set.getResolutionX() - 3* Assets::Sprites["buttonsmall"].FrameDim.x) / 4, 2 * (Assets::Sprites["buttonbig2"].FrameDim.y + 12) + BigButtonsYspace/3 + j * (Assets::Sprites["buttonsmall"].FrameDim.y + 4)));
 				target.draw(text);
 			}
 			tmp++;

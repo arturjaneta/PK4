@@ -40,3 +40,8 @@ double Settings::getScale()
 {
 	return Scale;
 }
+
+int Settings::getFrameRate()
+{
+	return FrameRate;
+}

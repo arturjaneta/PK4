@@ -6,10 +6,10 @@ GameCreator::GameCreator(int resx,int resy)
 	Set = Settings(resx,resy);
 	World = WorldManager(Set);
 	Window = std::make_shared<sf::RenderWindow>(sf::VideoMode(resx, resy), "Platformowka 2D", sf::Style::Fullscreen);
-	Window->setFramerateLimit(60);
+	Window->setFramerateLimit(Set.getFrameRate());
 	Assets::LoadAssets();
 	PauseScreen = Pause(Set,World.getWorldsCount());
-	World.setWorld(0);
+	World.setWorld(0);	//od pierwszego swiata
 }
 
 void GameCreator::RunGameLoop()
